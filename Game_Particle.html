@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & CFD Fusion - Research Challenge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #10B981;
+            --dark: #111827;
+            --light: #F9FAFB;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        .logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .stat-icon {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(79, 70, 229, 0.1);
+            border-radius: 50%;
+            color: var(--primary);
+        }
+        
+        .game-board {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+        }
+        
+        .player {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.6);
+            transition: all 0.1s ease;
+            z-index: 5;
+        }
+        
+        .player::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(79, 70, 229, 0.2);
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            70% { transform: scale(2); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        
+        .particle {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .cfd-particle { background-color: rgba(16, 185, 129, 0.7); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+        .thermal-particle { background-color: rgba(239, 68, 68, 0.7); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        .ml-particle { background-color: rgba(245, 158, 11, 0.7); box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+        
+        .obstacle {
+            position: absolute;
+            background-color: rgba(17, 24, 39, 0.8);
+            border-radius: 4px;
+            z-index: 3;
+        }
+        
+        .trail {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(79, 70, 229, 0.3);
+            z-index: 1;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+        
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid rgba(79, 70, 229, 0.2);
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .progress-bar-container {
+            width: 200px;
+            height: 10px;
+            background-color: #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .game-controls {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background-color: #4338ca;
+        }
+        
+        #up-btn { grid-column: 2; grid-row: 1; }
+        #left-btn { grid-column: 1; grid-row: 2; }
+        #down-btn { grid-column: 2; grid-row: 3; }
+        #right-btn { grid-column: 3; grid-row: 2; }
+        #power-btn { grid-column: 2; grid-row: 2; }
+        
+        .level-indicator {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 4;
+        }
+        
+        .researcher-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            z-index: 4;
+        }
+        
+        .badge-icon {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+        
+        .power-bar-container {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            width: 200px;
+            height: 10px;
+            background-color: #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 4;
+        }
+        
+        .power-bar {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .particle-count-container {
+            position: absolute;
+            bottom: 1rem;
+            left: 220px;
+            display: flex;
+            gap: 1rem;
+            z-index: 4;
+        }
+        
+        .particle-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        
+        .particle-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .particle-icon.cfd { background-color: var(--secondary); }
+        .particle-icon.thermal { background-color: var(--danger); }
+        .particle-icon.ml { background-color: var(--warning); }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <div class="logo">AI & CFD Fusion</div>
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-icon"><i class="ri-trophy-line"></i></div>
+                    <div>
+                        <div class="stat-label">Score</div>
+                        <div class="stat-value" id="score">0</div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon"><i class="ri-time-line"></i></div>
+                    <div>
+                        <div class="stat-label">Time</div>
+                        <div class="stat-value" id="time">00:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-board" id="game-board">
+            <div class="player" id="player"></div>
+            <div class="level-indicator" id="level-indicator">Level 1: CFD Novice</div>
+            <div class="researcher-badge">
+                <div class="badge-icon"><i class="ri-graduation-cap-line"></i></div>
+                <span id="researcher-rank">M.Tech Candidate</span>
+            </div>
+            <div class="power-bar-container">
+                <div class="power-bar" id="power-bar"></div>
+            </div>
+            <div class="particle-count-container">
+                <div class="particle-count"><div class="particle-icon cfd"></div><span id="cfd-count">0</span></div>
+                <div class="particle-count"><div class="particle-icon thermal"></div><span id="thermal-count">0</span></div>
+                <div class="particle-count"><div class="particle-icon ml"></div><span id="ml-count">0</span></div>
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button class="control-btn" id="up-btn"><i class="ri-arrow-up-line"></i></button>
+            <button class="control-btn" id="left-btn"><i class="ri-arrow-left-line"></i></button>
+            <button class="control-btn" id="down-btn"><i class="ri-arrow-down-line"></i></button>
+            <button class="control-btn" id="right-btn"><i class="ri-arrow-right-line"></i></button>
+            <button class="control-btn" id="power-btn"><i class="ri-flashlight-line"></i></button>
+        </div>
+        
+        <div class="modal-overlay" id="welcome-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-title">Welcome to AI & CFD Fusion!</div>
+                    <button class="modal-close" id="welcome-close">×</button>
+                </div>
+                <div class="modal-content">
+                    <p>Navigate through CFD, Thermal Analysis, and Machine Learning challenges to advance your research career!</p>
+                    <h3>How to Play:</h3>
+                    <ul>
+                        <li>Collect colored particles (Green: CFD, Red: Thermal, Orange: ML)</li>
+                        <li>Avoid black obstacles</li>
+                        <li>Use power-ups strategically</li>
+                        <li>Complete levels to unlock new research ranks</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="start-game">Start Research</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-overlay" id="game-over-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-title">Simulation Terminated</div>
+                    <button class="modal-close" id="game-over-close">×</button>
+                </div>
+                <div class="modal-content">
+                    <p>Final Score: <span id="final-score"></span></p>
+                    <p>Research Rank: <span id="final-rank"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="restart-game">Retry Simulation</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loader-overlay" id="loader">
+            <div class="loader-spinner"></div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div id="loading-text">Initializing Research Simulation...</div>
+        </div>
+    </div>
+
+    <script>
+        function clamp(value, min, max) {
+            return Math.min(Math.max(value, min), max);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Game Constants
+            const MAX_TRAILS = 50;
+            const PARTICLE_LIMIT = 30;
+            const PLAYER_SPEED = 5;
+            const POWER_SPEED = 8;
+            const PARTICLE_SPAWN_INTERVAL = 2000;
+            const OBSTACLE_SPAWN_INTERVAL = 5000;
+            const POWER_DURATION = 5000;
+            const LEVEL_UP_SCORE = 100;
+            
+            // Game State
+            let score = 0;
+            let level = 1;
+            let gameRunning = false;
+            let particles = [];
+            let obstacles = [];
+            let trails = [];
+            let powerLevel = 0;
+            let isPowerActive = false;
+            let playerX = 100;
+            let playerY = 100;
+            let boardWidth = 0;
+            let boardHeight = 0;
+            let cfdCount = 0;
+            let thermalCount = 0;
+            let mlCount = 0;
+            let timeSeconds = 0;
+            let keysPressed = {};
+            
+            // DOM Elements
+            const gameBoard = document.getElementById('game-board');
+            const player = document.getElementById('player');
+            const scoreElement = document.getElementById('score');
+            const timeElement = document.getElementById('time');
+            const levelIndicator = document.getElementById('level-indicator');
+            const researcherRank = document.getElementById('researcher-rank');
+            const powerBar = document.getElementById('power-bar');
+            const cfdCountElement = document.getElementById('cfd-count');
+            const thermalCountElement = document.getElementById('thermal-count');
+            const mlCountElement = document.getElementById('ml-count');
+            const startGameBtn = document.getElementById('start-game');
+            const welcomeModal = document.getElementById('welcome-modal');
+            const welcomeClose = document.getElementById('welcome-close');
+            const gameOverModal = document.getElementById('game-over-modal');
+            const gameOverClose = document.getElementById('game-over-close');
+            const restartGameBtn = document.getElementById('restart-game');
+            const finalScore = document.getElementById('final-score');
+            const finalRank = document.getElementById('final-rank');
+            const loader = document.getElementById('loader');
+            const upBtn = document.getElementById('up-btn');
+            const leftBtn = document.getElementById('left-btn');
+            const downBtn = document.getElementById('down-btn');
+            const rightBtn = document.getElementById('right-btn');
+            const powerBtn = document.getElementById('power-btn');
+            
+            // Initialize Game
+            function init() {
+                simulateLoading();
+                setupEventListeners();
+                window.addEventListener('resize', updateDimensions);
+                updateDimensions();
+            }
+
+            function simulateLoading() {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    document.getElementById('progress-bar').style.width = `${progress}%`;
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                            welcomeModal.classList.add('active');
+                        }, 500);
+                    }
+                }, 300);
+            }
+
+            function setupEventListeners() {
+                // Keyboard Controls
+                document.addEventListener('keydown', (e) => {
+                    const key = e.key.toLowerCase();
+                    if (['w', 'arrowup', 'a', 'arrowleft', 's', 'arrowdown', 'd', 'arrowright'].includes(key)) {
+                        e.preventDefault();
+                        keysPressed[key] = true;
+                    }
+                });
+
+                document.addEventListener('keyup', (e) => {
+                    const key = e.key.toLowerCase();
+                    if (['w', 'arrowup', 'a', 'arrowleft', 's', 'arrowdown', 'd', 'arrowright'].includes(key)) {
+                        keysPressed[key] = false;
+                    }
+                });
+
+                // Button Controls
+                let buttonIntervals = {};
+
+                function startMoving(direction, speed) {
+                    if (buttonIntervals[direction]) return;
+                    buttonIntervals[direction] = setInterval(() => {
+                        if (direction === 'up') playerY -= speed;
+                        if (direction === 'down') playerY += speed;
+                        if (direction === 'left') playerX -= speed;
+                        if (direction === 'right') playerX += speed;
+                    }, 16);
+                }
+
+                function stopMoving(direction) {
+                    if (buttonIntervals[direction]) {
+                        clearInterval(buttonIntervals[direction]);
+                        delete buttonIntervals[direction];
+                    }
+                }
+
+                upBtn.addEventListener('mousedown', () => startMoving('up', isPowerActive ? POWER_SPEED : PLAYER_SPEED));
+                upBtn.addEventListener('mouseup', () => stopMoving('up'));
+                upBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    startMoving('up', isPowerActive ? POWER_SPEED : PLAYER_SPEED);
+                });
+                upBtn.addEventListener('touchend', () => stopMoving('up'));
+
+                downBtn.addEventListener('mousedown', () => startMoving('down', isPowerActive ? POWER_SPEED : PLAYER_SPEED));
+                downBtn.addEventListener('mouseup', () => stopMoving('down'));
+                downBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    startMoving('down', isPowerActive ? POWER_SPEED : PLAYER_SPEED);
+                });
+                downBtn.addEventListener('touchend', () => stopMoving('down'));
+
+                leftBtn.addEventListener('mousedown', () => startMoving('left', isPowerActive ? POWER_SPEED : PLAYER_SPEED));
+                leftBtn.addEventListener('mouseup', () => stopMoving('left'));
+                leftBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    startMoving('left', isPowerActive ? POWER_SPEED : PLAYER_SPEED);
+                });
+                leftBtn.addEventListener('touchend', () => stopMoving('left'));
+
+                rightBtn.addEventListener('mousedown', () => startMoving('right', isPowerActive ? POWER_SPEED : PLAYER_SPEED));
+                rightBtn.addEventListener('mouseup', () => stopMoving('right'));
+                rightBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    startMoving('right', isPowerActive ? POWER_SPEED : PLAYER_SPEED);
+                });
+                rightBtn.addEventListener('touchend', () => stopMoving('right'));
+
+                powerBtn.addEventListener('click', activatePowerUp);
+
+                // Modal Controls
+                startGameBtn.addEventListener('click', startGame);
+                welcomeClose.addEventListener('click', () => welcomeModal.classList.remove('active'));
+                gameOverClose.addEventListener('click', () => gameOverModal.classList.remove('active'));
+                restartGameBtn.addEventListener('click', () => {
+                    gameOverModal.classList.remove('active');
+                    startGame();
+                });
+            }
+
+            function updateDimensions() {
+                boardWidth = gameBoard.offsetWidth;
+                boardHeight = gameBoard.offsetHeight;
+                playerX = clamp(playerX, 0, boardWidth - 40);
+                playerY = clamp(playerY, 0, boardHeight - 40);
+                player.style.left = `${playerX}px`;
+                player.style.top = `${playerY}px`;
+            }
+
+            function startGame() {
+                gameRunning = true;
+                welcomeModal.classList.remove('active');
+                resetGameState();
+                spawnInitialElements();
+                gameLoop();
+                startTimer();
+                startParticleSpawner();
+                startObstacleSpawner();
+            }
+
+            function resetGameState() {
+                score = 0;
+                level = 1;
+                playerX = boardWidth / 2;
+                playerY = boardHeight / 2;
+                particles = [];
+                obstacles = [];
+                trails = [];
+                powerLevel = 0;
+                isPowerActive = false;
+                cfdCount = 0;
+                thermalCount = 0;
+                mlCount = 0;
+                timeSeconds = 0;
+                scoreElement.textContent = score;
+                levelIndicator.textContent = `Level ${level}: CFD Novice`;
+                researcherRank.textContent = 'M.Tech Candidate';
+                powerBar.style.width = '0%';
+                cfdCountElement.textContent = cfdCount;
+                thermalCountElement.textContent = thermalCount;
+                mlCountElement.textContent = mlCount;
+                timeElement.textContent = '00:00';
+                player.style.left = `${playerX}px`;
+                player.style.top = `${playerY}px`;
+                gameBoard.querySelectorAll('.particle, .obstacle, .trail').forEach(el => el.remove());
+            }
+
+            function gameLoop() {
+                if (!gameRunning) return;
+                requestAnimationFrame(gameLoop);
+                
+                updatePlayerPosition();
+                updateParticles();
+                updateObstacles();
+                checkCollisions();
+                updateTrails();
+                updatePowerLevel();
+                updateLevel();
+            }
+
+            function updatePlayerPosition() {
+                let speed = isPowerActive ? POWER_SPEED : PLAYER_SPEED;
+
+                if (keysPressed['w'] || keysPressed['arrowup']) playerY -= speed;
+                if (keysPressed['s'] || keysPressed['arrowdown']) playerY += speed;
+                if (keysPressed['a'] || keysPressed['arrowleft']) playerX -= speed;
+                if (keysPressed['d'] || keysPressed['arrowright']) playerX += speed;
+
+                playerX = clamp(playerX, 0, boardWidth - 40);
+                playerY = clamp(playerY, 0, boardHeight - 40);
+
+                player.style.left = `${playerX}px`;
+                player.style.top = `${playerY}px`;
+            }
+
+            function spawnInitialElements() {
+                for (let i = 0; i < 10; i++) {
+                    spawnParticle();
+                }
+                for (let i = 0; i < 3; i++) {
+                    spawnObstacle();
+                }
+            }
+
+            function startParticleSpawner() {
+                setInterval(() => {
+                    if (gameRunning && particles.length < PARTICLE_LIMIT) {
+                        spawnParticle();
+                    }
+                }, PARTICLE_SPAWN_INTERVAL);
+            }
+
+            function startObstacleSpawner() {
+                setInterval(() => {
+                    if (gameRunning && obstacles.length < 5) {
+                        spawnObstacle();
+                    }
+                }, OBSTACLE_SPAWN_INTERVAL);
+            }
+
+            function spawnParticle() {
+                const types = ['cfd', 'thermal', 'ml'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const x = Math.random() * (boardWidth - 30);
+                const y = Math.random() * (boardHeight - 30);
+                const particle = document.createElement('div');
+                particle.classList.add('particle', `${type}-particle`);
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                gameBoard.appendChild(particle);
+                particles.push({ element: particle, x, y, type });
+            }
+
+            function spawnObstacle() {
+                const width = 50 + Math.random() * 50;
+                const height = 50 + Math.random() * 50;
+                const x = Math.random() * (boardWidth - width);
+                const y = Math.random() * (boardHeight - height);
+                const obstacle = document.createElement('div');
+                obstacle.classList.add('obstacle');
+                obstacle.style.width = `${width}px`;
+                obstacle.style.height = `${height}px`;
+                obstacle.style.left = `${x}px`;
+                obstacle.style.top = `${y}px`;
+                gameBoard.appendChild(obstacle);
+                obstacles.push({ element: obstacle, x, y, width, height });
+            }
+
+            function updateParticles() {
+                particles.forEach(particle => {
+                    // Basic particle movement (optional)
+                    particle.x += (Math.random() - 0.5) * 2;
+                    particle.y += (Math.random() - 0.5) * 2;
+                    particle.x = clamp(particle.x, 0, boardWidth - 30);
+                    particle.y = clamp(particle.y, 0, boardHeight - 30);
+                    particle.element.style.left = `${particle.x}px`;
+                    particle.element.style.top = `${particle.y}px`;
+                });
+            }
+
+            function updateObstacles() {
+                obstacles.forEach(obstacle => {
+                    // Obstacles are static for now
+                });
+            }
+
+            function checkCollisions() {
+                // Particle collisions
+                particles = particles.filter(particle => {
+                    const dx = playerX + 20 - (particle.x + 15);
+                    const dy = playerY + 20 - (particle.y + 15);
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 35) {
+                        particle.element.remove();
+                        score += 10;
+                        powerLevel = clamp(powerLevel + 10, 0, 100);
+                        if (particle.type === 'cfd') cfdCount++;
+                        if (particle.type === 'thermal') thermalCount++;
+                        if (particle.type === 'ml') mlCount++;
+                        scoreElement.textContent = score;
+                        cfdCountElement.textContent = cfdCount;
+                        thermalCountElement.textContent = thermalCount;
+                        mlCountElement.textContent = mlCount;
+                        powerBar.style.width = `${powerLevel}%`;
+                        return false;
+                    }
+                    return true;
+                });
+
+                // Obstacle collisions
+                for (let obstacle of obstacles) {
+                    if (
+                        playerX < obstacle.x + obstacle.width &&
+                        playerX + 40 > obstacle.x &&
+                        playerY < obstacle.y + obstacle.height &&
+                        playerY + 40 > obstacle.y
+                    ) {
+                        endGame();
+                        return;
+                    }
+                }
+            }
+
+            function updateTrails() {
+                if (trails.length > MAX_TRAILS) {
+                    const oldTrail = trails.shift();
+                    oldTrail.element.remove();
+                }
+
+                const trail = document.createElement('div');
+                trail.classList.add('trail');
+                trail.style.left = `${playerX + 17}px`;
+                trail.style.top = `${playerY + 17}px`;
+                gameBoard.appendChild(trail);
+                trails.push({ element: trail });
+
+                trails.forEach((trail, index) => {
+                    trail.element.style.opacity = 1 - index / MAX_TRAILS;
+                });
+            }
+
+            function updatePowerLevel() {
+                if (isPowerActive) {
+                    powerLevel = clamp(powerLevel - 0.05, 0, 100);
+                    powerBar.style.width = `${powerLevel}%`;
+                    if (powerLevel <= 0) {
+                        isPowerActive = false;
+                    }
+                }
+            }
+
+            function activatePowerUp() {
+                if (powerLevel >= 50 && !isPowerActive) {
+                    isPowerActive = true;
+                    powerLevel -= 50;
+                    powerBar.style.width = `${powerLevel}%`;
+                    setTimeout(() => {
+                        isPowerActive = false;
+                    }, POWER_DURATION);
+                }
+            }
+
+            function updateLevel() {
+                const newLevel = Math.floor(score / LEVEL_UP_SCORE) + 1;
+                if (newLevel > level) {
+                    level = newLevel;
+                    const titles = [
+                        'CFD Novice',
+                        'Thermal Analyst',
+                        'ML Researcher',
+                        'CFD Expert',
+                        'AI Specialist',
+                        'Research Lead'
+                    ];
+                    const ranks = [
+                        'M.Tech Candidate',
+                        'Ph.D. Student',
+                        'Postdoctoral Researcher',
+                        'Assistant Professor',
+                        'Associate Professor',
+                        'Professor'
+                    ];
+                    levelIndicator.textContent = `Level ${level}: ${titles[Math.min(level - 1, titles.length - 1)]}`;
+                    researcherRank.textContent = ranks[Math.min(level - 1, ranks.length - 1)];
+                }
+            }
+
+            function startTimer() {
+                setInterval(() => {
+                    if (gameRunning) {
+                        timeSeconds++;
+                        const minutes = Math.floor(timeSeconds / 60);
+                        const seconds = timeSeconds % 60;
+                        timeElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                }, 1000);
+            }
+
+            function endGame() {
+                gameRunning = false;
+                finalScore.textContent = score;
+                finalRank.textContent = researcherRank.textContent;
+                gameOverModal.classList.add('active');
+            }
+
+            // Start the game
+            init();
+        });
+    </script>
+</body>
+</html>
