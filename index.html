@@ -336,22 +336,35 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-center mb-16">Get in Touch</h2>
                 <div class="grid md:grid-cols-2 gap-12">
-                    <div class="fade-in" role="region" aria-labelledby="kernel-hub">
-                        <h3 id="kernel-hub" class="text-xl font-semibold mb-6">Kernel Hub</h3>
-                        <div class="bg-gray-900 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow font-mono text-green-400">
-                            <p class="text-lg mb-2 terminal-cursor">$ whoami</p>
-                            <p class="mb-4">I’m J Yadagiri, running AI & CFD processes on my research system at Amrita Vishwa Vidyapeetham. My kernel’s optimized for fluid dynamics and machine learning innovation.</p>
-                            <p class="text-lg mb-2">$ ./engage.sh</p>
-                            <p class="mb-6">Boot up my projects or ping my AI assistant for open-source collaboration. Let’s compile solutions together!</p>
-                            <div class="flex flex-wrap gap-4">
-                                <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" class="bg-green-600 text-white px-6 py-3 !rounded-button hover:bg-green-700 transition-colors">
-                                    run projects
-                                </button>
-                                <button onclick="document.getElementById('chat-toggle').click()" class="bg-green-600 text-white px-6 py-3 !rounded-button hover:bg-green-700 transition-colors">
-                                    exec AI assistant
-                                </button>
-                            </div>
-                        </div>
+<div class="fade-in" role="region" aria-labelledby="kernel-hub">
+    <h3 id="kernel-hub" class="text-xl font-semibold mb-6">Kernel Hub</h3>
+    <div class="bg-gray-900 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow font-mono text-green-400">
+        <p class="text-lg mb-2 terminal-cursor">$ whoami</p>
+        <p class="mb-4">I’m J Yadagiri, running AI & CFD processes on my research system at Amrita Vishwa Vidyapeetham. My kernel’s optimized for fluid dynamics and machine learning innovation.</p>
+        
+        <p class="text-lg mb-2">$ ./research_game.sh</p>
+        <p class="mb-6">[CFD-Thermal-ML Simulator 2.0] Loaded. Collect knowledge particles (Green/Red/Orange) while avoiding academic pitfalls (black obstacles). Power-ups: Coffee (speed), Supercompute (invincibility), OpenAccess (x2 score)</p>
+        
+        <p class="text-lg mb-2">$ ./engage.sh</p>
+        <p class="mb-6">Boot up my projects or ping my AI assistant for open-source collaboration. Let’s compile solutions together!</p>
+        
+        <div class="flex flex-wrap gap-4">
+            <button onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" 
+                    class="bg-green-600 text-white px-6 py-3 !rounded-button hover:bg-green-700 transition-colors">
+                run projects
+            </button>
+            <button onclick="document.getElementById('chat-toggle').click()" 
+                    class="bg-green-600 text-white px-6 py-3 !rounded-button hover:bg-green-700 transition-colors">
+                exec AI assistant
+            </button>
+            <button onclick="window.open('Game_Particle.html', '_blank')" 
+                    class="bg-blue-600 text-white px-6 py-3 !rounded-button hover:bg-blue-700 transition-colors"
+                    aria-label="Launch Research Game">
+                start research game
+            </button>
+        </div>
+    </div>
+</div>
                         <div class="mt-8 text-gray-600">
                             <h4 class="text-lg font-semibold mb-4">System Stats</h4>
                             <ul class="grid grid-cols-2 gap-4">
