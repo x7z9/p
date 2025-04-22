@@ -259,109 +259,110 @@
         </section>
 
         <!-- Projects Section -->
-<section id="projects" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-center mb-16">Featured Projects</h2>
-        <div class="flex justify-center mb-8">
-            <div class="inline-flex p-1 bg-gray-100 rounded-full">
-                <button class="px-4 py-2 rounded-full bg-white shadow-sm text-primary filter-btn active" data-filter="all">All</button>
-                <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="cfd">CFD</button>
-                <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="ai-ml">AI/ML</button>
-                <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="thermal">Thermal</button>
-                <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="thermal">HTML</button>
-            </div>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card cursor-pointer" data-tags="cfd python">
-                <img src="Images/1.jpg" alt="CFD Project" class="w-full h-48 object-cover" loading="lazy" />
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">CFD</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Python</span>
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-16">Featured Projects</h2>
+                <div class="flex justify-center mb-8">
+                    <div class="inline-flex p-1 bg-gray-100 rounded-full">
+                        <button class="px-4 py-2 rounded-full bg-white shadow-sm text-primary filter-btn active" data-filter="all">All</button>
+                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="cfd">CFD</button>
+                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="ai-ml">AI/ML</button>
+                        <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="thermal">Thermal</button>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Advanced Flow Prediction</h3>
-                    <p class="text-gray-600 mb-4">Implementation of novel CFD algorithms for complex flow predictions using OpenFOAM and custom Python libraries.</p>
-                    <button onclick="openProjectModal('cfd-project')" class="text-primary hover:text-primary/80 font-medium flex items-center">
-                        View Project <i class="ri-arrow-right-line ml-2"></i>
-                    </button>
                 </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="ai-ml python">
-                <img src="Images/2.jpg" alt="Forex Project" class="w-full h-48 object-cover" loading="lazy" />
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Deep Learning</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Finance</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Forex Exchange Rate Prediction</h3>
-                    <p class="text-gray-600 mb-4">Deep learning models for accurate forex rate prediction using LSTM and transformer architectures.</p>
-                    <a href="https://www.linkedin.com/posts/j-yadagiri-4944ba21b_deeplearning-ai-machinelearning-activity-7255443007506653185-nw8y" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
-                        View Project <i class="ri-arrow-right-line ml-2"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="ai-ml python">
-                <img src="Images/3.jpg" alt="Earthquake Project" class="w-full h-48 object-cover" loading="lazy" />
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Machine Learning</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Data Science</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Earthquake Prediction Analysis</h3>
-                    <p class="text-gray-600 mb-4">Comparative study of ML algorithms for earthquake prediction using logistic regression, KNN, and random forest.</p>
-                    <a href="https://www.linkedin.com/posts/j-yadagiri-4944ba21b_machinelearning-earthquakedata-logisticregression-activity-7255446279747469312-gLtW" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
-                        View Project <i class="ri-arrow-right-line ml-2"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="thermal python">
-                <img src="Images/4.jpg" alt="Thermal Imaging Project" class="w-full h-48 object-cover" loading="lazy" />
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Thermal</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Python</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Thermal Imaging with Python</h3>
-                    <p class="text-gray-600 mb-4">Advanced thermal image processing and analysis using Python and computer vision techniques.</p>
-                    <button onclick="openProjectModal('thermal-project')" class="text-primary hover:text-primary/80 font-medium flex items-center">
-                        View Project <i class="ri-arrow-right-line ml-2"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="cfd openfoam-v10 gambit-2.4.6 paraview tecplot-360">
-                <img src="Images/5.jpg" alt="Flow over Cylinder Project" class="w-full h-48 object-cover" loading="lazy" />
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">OpenFOAM</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">GAMBIT</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">ParaView</span>
-                        <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Tecplot</span>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Flow over Cylinder</h3>
-                    <p class="text-gray-600 mb-4">Simulation and analysis of fluid flow over a cylinder using CFD techniques with OpenFOAM, GAMBIT for meshing, and visualization in ParaView and Tecplot 360.</p>
-                    <a href="https://github.com/x7z9/Flow-over-cylinder" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
-                        View Project <i class="ri-arrow-right-line ml-2"></i>
-                    </a>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="HTML">
-                    <img src="Images/6.png" alt="Engineering_Students_Academic_Dashboard" class="w-full h-48 object-cover" loading="lazy" />
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">HTML</span>
-                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">CSS</span>
-                            <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">JavaScript</span>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card cursor-pointer" data-tags="cfd python">
+                        <img src="Images/1.jpg" alt="CFD Project" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">CFD</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Python</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Advanced Flow Prediction</h3>
+                            <p class="text-gray-600 mb-4">Implementation of novel CFD algorithms for complex flow predictions using OpenFOAM and custom Python libraries.</p>
+                            <button onclick="openProjectModal('cfd-project')" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                View Project <i class="ri-arrow-right-line ml-2"></i>
+                            </button>
                         </div>
-                        <h3 class="text-xl font-semibold mb-2">Engineering_Students_Academic_Dashboard</h3>
-                        <p class="text-gray-600 mb-4">⚠️ Under Development (Courses): Engineering student portal with active work on courses management + existing project tracking features</p>
-                        <a href="Engineering_Students_Academic_Dashboard.html" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
-                            View Project <i class="ri-arrow-right-line ml-2"></i>
-                        </a>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="ai-ml python">
+                        <img src="Images/2.jpg" alt="Forex Project" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Deep Learning</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Finance</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Forex Exchange Rate Prediction</h3>
+                            <p class="text-gray-600 mb-4">Deep learning models for accurate forex rate prediction using LSTM and transformer architectures.</p>
+                            <a href="https://www.linkedin.com/posts/j-yadagiri-4944ba21b_deeplearning-ai-machinelearning-activity-7255443007506653185-nw8y" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                View Project <i class="ri-arrow-right-line ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="ai-ml python">
+                        <img src="Images/3.jpg" alt="Earthquake Project" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Machine Learning</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Data Science</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Earthquake Prediction Analysis</h3>
+                            <p class="text-gray-600 mb-4">Comparative study of ML algorithms for earthquake prediction using logistic regression, KNN, and random forest.</p>
+                            <a href="https://www.linkedin.com/posts/j-yadagiri-4944ba21b_machinelearning-earthquakedata-logisticregression-activity-7255446279747469312-gLtW" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                View Project <i class="ri-arrow-right-line ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="thermal python">
+                        <img src="Images/4.jpg" alt="Thermal Imaging Project" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Thermal</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Python</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Thermal Imaging with Python</h3>
+                            <p class="text-gray-600 mb-4">Advanced thermal image processing and analysis using Python and computer vision techniques.</p>
+                            <button onclick="openProjectModal('thermal-project')" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                View Project <i class="ri-arrow-right-line ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="cfd openfoam-v10 gambit-2.4.6 paraview tecplot-360">
+                        <img src="Images/5.jpg" alt="Flow over Cylinder Project" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">OpenFOAM</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">GAMBIT</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">ParaView</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">Tecplot</span>
+                            </div>
+                                <h3 class="text-xl font-semibold mb-2">Flow over Cylinder</h3>
+                                <p class="text-gray-600 mb-4">Simulation and analysis of fluid flow over a cylinder using CFD techniques with OpenFOAM, GAMBIT for meshing, and visualization in ParaView and Tecplot 360.</p>
+                                <a href="https://github.com/x7z9/Flow-over-cylinder" target="_blank" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                View Project <i class="ri-arrow-right-line ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="html css javascript">
+                        <img src="Images/6.png" alt="html Project" class="w-full h-48 object-cover" loading="lazy" />
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Html</span>
+                                <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">CSS</span>
+                                <span class="px-3 py-1 bg-secondary/10 text-secondary text-sm rounded-full">JavaScript</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Engineering_Students_Academic_Dashboard</h3>
+                            <p class="text-gray-600 mb-4">⚠️ Under Development (Courses): Engineering student portal with active work on courses management + existing project tracking features.</p>
+                            <button onclick="openProjectModal('Engineering_Students_Academic_Dashboard.html')" class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                View Project <i class="ri-arrow-right-line ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
+        </section>
         <!-- Contact Section -->
         <section id="contact" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
