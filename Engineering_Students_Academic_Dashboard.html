@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Portal | Engineering Students</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4f46e5',secondary:'#10b981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+}
+/* Dark mode styles */
+.dark {
+color-scheme: dark;
+}
+.dark body {
+background-color: #111827;
+}
+.dark .bg-white {
+background-color: #1f2937;
+}
+.dark .bg-gray-50 {
+background-color: #111827;
+}
+.dark .text-gray-900 {
+color: #f3f4f6;
+}
+.dark .text-gray-700 {
+color: #e5e7eb;
+}
+.dark .text-gray-600 {
+color: #d1d5db;
+}
+.dark .text-gray-500 {
+color: #9ca3af;
+}
+.dark .text-sm {
+color: #e5e7eb;
+}
+.dark .text-xs {
+color: #d1d5db;
+}
+.dark a {
+color: #818cf8;
+}
+.dark a:hover {
+color: #6366f1;
+}
+.dark .border-gray-200 {
+border-color: #374151;
+}
+.dark .bg-gray-100 {
+background-color: #374151;
+}
+.dark .bg-indigo-100 {
+background-color: rgba(79, 70, 229, 0.2);
+}
+.dark .bg-green-100 {
+background-color: rgba(16, 185, 129, 0.2);
+}
+.dark .bg-blue-100 {
+background-color: rgba(59, 130, 246, 0.2);
+}
+.dark .bg-red-100 {
+background-color: rgba(239, 68, 68, 0.2);
+}
+.dark .hover\:bg-gray-100:hover {
+background-color: #374151;
+}
+.dark .bg-gray-200 {
+background-color: #4b5563;
+}
+.dark input {
+background-color: #374151;
+color: #f3f4f6;
+}
+.dark input::placeholder {
+color: #9ca3af;
+}
+.dark select {
+background-color: #374151;
+color: #f3f4f6;
+}
+.dark option {
+background-color: #1f2937;
+color: #f3f4f6;
+}
+.dark .border-gray-200 {
+border-color: #374151;
+}
+.dark .hover\:bg-gray-50:hover {
+background-color: #374151;
+}
+.dark .bg-indigo-50 {
+background-color: rgba(79, 70, 229, 0.1);
+}
+.dark .bg-indigo-100 {
+background-color: rgba(79, 70, 229, 0.2);
+}
+.dark .bg-green-100 {
+background-color: rgba(16, 185, 129, 0.2);
+}
+.dark .bg-blue-100 {
+background-color: rgba(59, 130, 246, 0.2);
+}
+.dark .bg-red-100 {
+background-color: rgba(239, 68, 68, 0.2);
+}
+.dark .shadow {
+box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+.dark input {
+background-color: #374151;
+color: #f3f4f6;
+}
+.dark input::placeholder {
+color: #6b7280;
+}
+.dark .bg-gray-200 {
+background-color: #374151;
+}
+.scrollbar-hide::-webkit-scrollbar {
+display: none;
+}
+.scrollbar-hide {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 18px;
+height: 18px;
+border-radius: 50%;
+background: #4f46e5;
+cursor: pointer;
+}
+input[type="range"] {
+-webkit-appearance: none;
+appearance: none;
+width: 100%;
+height: 6px;
+border-radius: 5px;
+background: #e5e7eb;
+outline: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<div class="hidden md:flex md:flex-shrink-0">
+<div class="flex flex-col w-64 bg-white border-r border-gray-200">
+<div class="flex items-center justify-center h-16 px-4 border-b border-gray-200">
+<h1 class="text-xl font-['Pacifico'] text-primary">University name</h1>
+</div>
+<div class="flex flex-col flex-grow px-4 py-4 overflow-y-auto scrollbar-hide">
+<div class="space-y-4">
+<div>
+<a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-primary bg-indigo-50 rounded-md">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-dashboard-line"></i>
+</div>
+Dashboard
+</a>
+</div>
+<div>
+<p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Academics</p>
+<div class="mt-2 space-y-1">
+<a href="Academic_Portal _Engineering_Students/Academics/Student_Courses_Management.html" data-readdy="true" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+  <div class="w-5 h-5 flex items-center justify-center mr-3">
+    <i class="ri-book-open-line"></i>
+  </div>
+  Courses
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-calendar-line"></i>
+</div>
+Schedule
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-user-follow-line"></i>
+</div>
+Attendance
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-file-chart-line"></i>
+</div>
+Grades
+</a>
+</div>
+</div>
+<div>
+<p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Research</p>
+<div class="mt-2 space-y-1">
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-flask-line"></i>
+</div>
+Projects
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-article-line"></i>
+</div>
+Publications
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-funds-box-line"></i>
+</div>
+Funding
+</a>
+</div>
+</div>
+<div>
+<p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Campus</p>
+<div class="mt-2 space-y-1">
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-building-line"></i>
+</div>
+Hostel
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-bus-line"></i>
+</div>
+Transport
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-wallet-3-line"></i>
+</div>
+Fees
+</a>
+</div>
+</div>
+<div>
+<p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Extracurricular</p>
+<div class="mt-2 space-y-1">
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-team-line"></i>
+</div>
+Clubs
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-basketball-line"></i>
+</div>
+Sports
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-code-box-line"></i>
+</div>
+Hackathons
+</a>
+</div>
+</div>
+<div>
+<p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Career</p>
+<div class="mt-2 space-y-1">
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-briefcase-line"></i>
+</div>
+Placements
+</a>
+<a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-user-star-line"></i>
+</div>
+Alumni Network
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-shrink-0 p-4 border-t border-gray-200">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+<span class="text-primary font-medium">RS</span>
+</div>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium text-gray-900">Student Name</p>
+<p class="text-xs font-medium text-gray-500">B.Tech CSE • 1st Year</p>
+</div>
+<div class="ml-auto">
+<button class="flex items-center justify-center w-8 h-8 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-500">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-logout-box-line"></i>
+</div>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main content -->
+<div class="flex flex-col flex-1 overflow-hidden">
+<!-- Top navigation -->
+<div class="flex items-center h-16 px-4 bg-white border-b border-gray-200 sm:px-6 md:px-8">
+<button class="md:hidden text-gray-500 focus:outline-none">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-menu-line"></i>
+</div>
+</button>
+<div class="flex-1 flex justify-between items-center">
+<div class="flex items-center md:ml-0">
+<div class="relative w-64">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<div class="w-5 h-5 flex items-center justify-center text-gray-400">
+<i class="ri-search-line"></i>
+</div>
+</div>
+<input type="text" id="searchInput" class="block w-full pl-10 pr-3 py-2 border-none rounded-md bg-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white sm:text-sm" placeholder="Search..." onkeyup="handleSearch(event)">
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<div class="flex">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+<div class="w-5 h-5 flex items-center justify-center text-gray-500">
+<i class="ri-notification-3-line"></i>
+</div>
+</button>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+<div class="w-5 h-5 flex items-center justify-center text-gray-500">
+<i class="ri-moon-line"></i>
+</div>
+</button>
+</div>
+<div class="hidden md:flex items-center border-l border-gray-200 pl-4">
+<div class="flex-shrink-0">
+<div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center cursor-pointer" id="userMenuButton">
+<span class="text-primary font-medium">RS</span>
+</div>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium text-gray-900">Student Name</p>
+<p class="text-xs font-medium text-gray-500">B.Tech CSE • 1st Year</p>
+</div>
+<!-- User Menu Dropdown -->
+<div id="userMenu" class="hidden absolute right-4 top-16 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+<div class="py-1">
+<button onclick="showLoginModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign In</button>
+<button onclick="showSignupModal()" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Up</button>
+<button onclick="showDeleteAccountModal()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Delete Account</button>
+</div>
+</div>
+<!-- Login Modal -->
+<div id="loginModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+<div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-medium text-gray-900">Sign In</h3>
+<button onclick="closeLoginModal()" class="text-gray-400 hover:text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<form id="loginForm" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700">Email</label>
+<input type="email" id="loginEmail" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700">Password</label>
+<input type="password" id="loginPassword" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<input type="checkbox" id="remember" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+<label for="remember" class="ml-2 block text-sm text-gray-900">Remember me</label>
+</div>
+<a href="#" class="text-sm font-medium text-primary hover:text-indigo-500">Forgot password?</a>
+</div>
+<button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button">Sign In</button>
+</form>
+</div>
+</div>
+<!-- Signup Modal -->
+<div id="signupModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+<div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-medium text-gray-900">Sign Up</h3>
+<button onclick="closeSignupModal()" class="text-gray-400 hover:text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<form id="signupForm" class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700">Full Name</label>
+<input type="text" id="signupName" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700">Email</label>
+<input type="email" id="signupEmail" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700">Password</label>
+<input type="password" id="signupPassword" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+<input type="password" id="signupConfirmPassword" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700">Role</label>
+<select id="signupRole" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm">
+<option value="student">Student</option>
+<option value="faculty">Faculty</option>
+<option value="admin">Admin</option>
+</select>
+</div>
+<button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button">Sign Up</button>
+</form>
+</div>
+</div>
+<!-- Delete Account Modal -->
+<div id="deleteAccountModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+<div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-lg bg-white">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-medium text-gray-900">Delete Account</h3>
+<button onclick="closeDeleteAccountModal()" class="text-gray-400 hover:text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<div class="space-y-4">
+<p class="text-sm text-gray-500">Are you sure you want to delete your account? This action cannot be undone.</p>
+<div>
+<label class="block text-sm font-medium text-gray-700">Enter your password to confirm</label>
+<input type="password" id="deleteAccountPassword" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" required>
+</div>
+<div class="flex justify-end space-x-3">
+<button onclick="closeDeleteAccountModal()" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button">Cancel</button>
+<button onclick="deleteAccount()" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 !rounded-button">Delete Account</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Success/Error Toast -->
+<div id="toast" class="hidden fixed bottom-4 right-4 px-4 py-2 rounded-lg text-white z-50"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main content area -->
+<div class="flex-1 overflow-auto bg-gray-50">
+<div class="py-6 px-4 sm:px-6 md:px-8">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+<p class="mt-1 text-sm text-gray-500">Welcome back, Rahul! Here's your academic overview.</p>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+<!-- GPA Card -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-indigo-100 rounded-md p-3">
+<div class="w-6 h-6 flex items-center justify-center text-primary">
+<i class="ri-medal-line"></i>
+</div>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-gray-500 truncate">Current CGPA</dt>
+<dd>
+<div class="flex items-baseline">
+<div class="text-2xl font-semibold text-gray-900">8.76</div>
+<div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+<div class="w-3 h-3 flex items-center justify-center">
+<i class="ri-arrow-up-s-line"></i>
+</div>
+<span class="sr-only">Increased by</span>
+0.21
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View detailed analysis<span class="sr-only"> of GPA</span></a>
+</div>
+</div>
+</div>
+<!-- Attendance Card -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-green-100 rounded-md p-3">
+<div class="w-6 h-6 flex items-center justify-center text-green-600">
+<i class="ri-user-follow-line"></i>
+</div>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-gray-500 truncate">Attendance</dt>
+<dd>
+<div class="flex items-baseline">
+<div class="text-2xl font-semibold text-gray-900">87%</div>
+<div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
+<div class="w-3 h-3 flex items-center justify-center">
+<i class="ri-arrow-up-s-line"></i>
+</div>
+<span class="sr-only">Increased by</span>
+3%
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View attendance details<span class="sr-only"> of attendance</span></a>
+</div>
+</div>
+</div>
+<!-- Credits Card -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-blue-100 rounded-md p-3">
+<div class="w-6 h-6 flex items-center justify-center text-blue-600">
+<i class="ri-stack-line"></i>
+</div>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-gray-500 truncate">Credits Completed</dt>
+<dd>
+<div class="flex items-baseline">
+<div class="text-2xl font-semibold text-gray-900">112/180</div>
+<div class="ml-2 flex items-baseline text-sm font-semibold text-gray-600">
+62%
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View credit details<span class="sr-only"> of credits</span></a>
+</div>
+</div>
+</div>
+<!-- Upcoming Card -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0 bg-red-100 rounded-md p-3">
+<div class="w-6 h-6 flex items-center justify-center text-red-600">
+<i class="ri-calendar-event-line"></i>
+</div>
+</div>
+<div class="ml-5 w-0 flex-1">
+<dl>
+<dt class="text-sm font-medium text-gray-500 truncate">Upcoming Deadlines</dt>
+<dd>
+<div class="flex items-baseline">
+<div class="text-2xl font-semibold text-gray-900">4</div>
+<div class="ml-2 flex items-baseline text-sm font-semibold text-red-600">
+<div class="w-3 h-3 flex items-center justify-center">
+<i class="ri-time-line"></i>
+</div>
+<span>This week</span>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View all deadlines<span class="sr-only"> of deadlines</span></a>
+</div>
+</div>
+</div>
+</div>
+<!-- Academic Performance Section -->
+<div class="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
+<!-- GPA Trend Chart -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Semester GPA Trend</h3>
+<div class="mt-2" id="gpa-chart" style="height: 300px;"></div>
+</div>
+</div>
+<!-- Subject Performance Heatmap -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Subject Performance</h3>
+<div class="mt-2" id="subject-heatmap" style="height: 400px;"></div>
+</div>
+</div>
+</div>
+<!-- Attendance & Schedule Section -->
+<div class="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+<!-- Today's Schedule -->
+<div class="bg-white overflow-hidden shadow rounded-lg lg:col-span-2">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Today's Schedule</h3>
+<p class="text-sm text-gray-500">Tuesday, April 22, 2025</p>
+</div>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div class="flow-root">
+<ul class="-mb-8">
+<li>
+<div class="relative pb-8">
+<span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+<div class="relative flex space-x-3">
+<div>
+<span class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center ring-8 ring-white">
+<div class="w-5 h-5 flex items-center justify-center text-green-600">
+<i class="ri-check-line"></i>
+</div>
+</span>
+</div>
+<div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+<div>
+<p class="text-sm text-gray-900">Machine Learning <span class="font-medium text-gray-500">(CS4023)</span></p>
+<p class="text-xs text-gray-500">Prof. Ananya Gupta • Room 302</p>
+</div>
+<div class="text-right text-sm whitespace-nowrap text-gray-500">
+<p class="font-medium">9:00 - 10:30 AM</p>
+<p class="text-xs text-green-600">Attended</p>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="relative pb-8">
+<span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+<div class="relative flex space-x-3">
+<div>
+<span class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center ring-8 ring-white">
+<div class="w-5 h-5 flex items-center justify-center text-green-600">
+<i class="ri-check-line"></i>
+</div>
+</span>
+</div>
+<div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+<div>
+<p class="text-sm text-gray-900">Computer Networks <span class="font-medium text-gray-500">(CS4021)</span></p>
+<p class="text-xs text-gray-500">Prof. Vikram Singh • Room 204</p>
+</div>
+<div class="text-right text-sm whitespace-nowrap text-gray-500">
+<p class="font-medium">11:00 - 12:30 PM</p>
+<p class="text-xs text-green-600">Attended</p>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="relative pb-8">
+<span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+<div class="relative flex space-x-3">
+<div>
+<span class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center ring-8 ring-white">
+<div class="w-5 h-5 flex items-center justify-center text-primary">
+<i class="ri-time-line"></i>
+</div>
+</span>
+</div>
+<div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+<div>
+<p class="text-sm text-gray-900">Database Systems <span class="font-medium text-gray-500">(CS4022)</span></p>
+<p class="text-xs text-gray-500">Prof. Meera Patel • Lab 103</p>
+</div>
+<div class="text-right text-sm whitespace-nowrap text-gray-500">
+<p class="font-medium">2:00 - 3:30 PM</p>
+<p class="text-xs text-primary">Current</p>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="relative pb-8">
+<div class="relative flex space-x-3">
+<div>
+<span class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center ring-8 ring-white">
+<div class="w-5 h-5 flex items-center justify-center text-gray-500">
+<i class="ri-calendar-line"></i>
+</div>
+</span>
+</div>
+<div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+<div>
+<p class="text-sm text-gray-900">Software Engineering <span class="font-medium text-gray-500">(CS4024)</span></p>
+<p class="text-xs text-gray-500">Prof. Rajesh Kumar • Room 401</p>
+</div>
+<div class="text-right text-sm whitespace-nowrap text-gray-500">
+<p class="font-medium">4:00 - 5:30 PM</p>
+<p class="text-xs text-gray-500">Upcoming</p>
+</div>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Attendance Overview -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Attendance Overview</h3>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div id="attendance-chart" style="height: 250px;"></div>
+<div class="mt-6 space-y-4">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-3 h-3 bg-red-500 rounded-full"></div>
+<span class="ml-2 text-sm text-gray-700">Computer Networks</span>
+</div>
+<span class="text-sm font-medium text-red-600">72%</span>
+</div>
+<div class="mt-1 w-full bg-gray-200 rounded-full h-1.5">
+<div class="bg-red-500 h-1.5 rounded-full" style="width: 72%"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+<span class="ml-2 text-sm text-gray-700">Database Systems</span>
+</div>
+<span class="text-sm font-medium text-yellow-600">82%</span>
+</div>
+<div class="mt-1 w-full bg-gray-200 rounded-full h-1.5">
+<div class="bg-yellow-500 h-1.5 rounded-full" style="width: 82%"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-3 h-3 bg-green-500 rounded-full"></div>
+<span class="ml-2 text-sm text-gray-700">Machine Learning</span>
+</div>
+<span class="text-sm font-medium text-green-600">95%</span>
+</div>
+<div class="mt-1 w-full bg-gray-200 rounded-full h-1.5">
+<div class="bg-green-500 h-1.5 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Research & Projects Section -->
+<div class="mt-8">
+<h2 class="text-lg font-medium text-gray-900">Research & Projects</h2>
+<div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+<!-- Project Card 1 -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 bg-indigo-100 rounded-md flex items-center justify-center">
+<div class="w-6 h-6 flex items-center justify-center text-primary">
+<i class="ri-ai-generate"></i>
+</div>
+</div>
+</div>
+<div class="ml-4">
+<h3 class="text-lg font-medium text-gray-900">AI-Based Traffic Management</h3>
+<p class="text-sm text-gray-500">Smart Cities Research Lab</p>
+</div>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between text-sm">
+<span class="text-gray-500">Progress</span>
+<span class="font-medium text-gray-900">68%</span>
+</div>
+<div class="mt-1 w-full bg-gray-200 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 68%"></div>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center text-sm text-gray-500">
+<div class="w-4 h-4 flex items-center justify-center mr-1">
+<i class="ri-calendar-line"></i>
+</div>
+<span>Due: May 15, 2025</span>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-medium text-primary">VP</div>
+<div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-xs font-medium text-green-600">AK</div>
+<div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-xs font-medium text-blue-600">SK</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View project details</a>
+</div>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:p-6">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<div class="w-12 h-12 bg-blue-100 rounded-md flex items-center justify-center">
+<div class="w-6 h-6 flex items-center justify-center text-blue-600">
+<i class="ri-database-2-line"></i>
+</div>
+</div>
+</div>
+<div class="ml-4">
+<h3 class="text-lg font-medium text-gray-900">Distributed Database System</h3>
+<p class="text-sm text-gray-500">Advanced Computing Lab</p>
+</div>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between text-sm">
+<span class="text-gray-500">Progress</span>
+<span class="font-medium text-gray-900">42%</span>
+</div>
+<div class="mt-1 w-full bg-gray-200 rounded-full h-2">
+<div class="bg-blue-600 h-2 rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center text-sm text-gray-500">
+<div class="w-4 h-4 flex items-center justify-center mr-1">
+<i class="ri-calendar-line"></i>
+</div>
+<span>Due: June 30, 2025</span>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-medium text-primary">RS</div>
+<div class="w-6 h-6 rounded-full bg-pink-100 flex items-center justify-center text-xs font-medium text-pink-600">NM</div>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View project details</a>
+</div>
+</div>
+</div>
+<!-- Publications Card -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Publications</h3>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div id="publication-chart" style="height: 180px;"></div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-gray-500">Total Citations</span>
+<span class="text-lg font-medium text-gray-900">27</span>
+</div>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-sm font-medium text-gray-500">h-index</span>
+<span class="text-lg font-medium text-gray-900">3</span>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View all publications</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Campus Services Section -->
+<div class="mt-8">
+<h2 class="text-lg font-medium text-gray-900">Campus Services</h2>
+<div class="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-2">
+<!-- Transport Tracking -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Transport Tracking</h3>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+Live
+</span>
+</div>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div class="relative rounded-lg overflow-hidden h-64 bg-cover bg-center" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png');">
+<div class="absolute inset-0 bg-black bg-opacity-10"></div>
+<div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-black to-transparent">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-white">Bus AMR-103</p>
+<p class="text-xs text-gray-200">Route: Karunagappally → Campus</p>
+<p class="text-xs text-gray-200">ETA: 7 minutes to Campus</p>
+</div>
+<button id="trackBusButton" class="bg-white bg-opacity-90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium !rounded-button whitespace-nowrap">Track Now</button>
+<!-- Bus Tracking Modal -->
+<div id="busTrackingModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+<div class="relative top-20 mx-auto p-5 border w-[800px] shadow-lg rounded-lg bg-white">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-medium text-gray-900">Live Bus Tracking - AMR-103</h3>
+<button id="closeBusTrackingModal" class="text-gray-400 hover:text-gray-500">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-close-line"></i>
+</div>
+</button>
+</div>
+<div class="flex space-x-4">
+<!-- Map Container -->
+<div class="flex-1">
+<div class="relative rounded-lg overflow-hidden h-[400px] bg-cover bg-center" style="background-image: url('https://public.readdy.ai/gen_page/map_placeholder_1280x720.png');">
+<div class="absolute inset-0 bg-black bg-opacity-10"></div>
+<!-- Bus Marker -->
+<div id="busMarker" class="absolute flex flex-col items-center" style="left: 40%; top: 45%;">
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white animate-pulse">
+<i class="ri-bus-line"></i>
+</div>
+<div class="mt-1 px-2 py-1 bg-white rounded-md shadow-md text-xs">
+AMR-103
+</div>
+</div>
+</div>
+</div>
+<!-- Tracking Info -->
+<div class="w-64 space-y-4">
+<div class="p-4 bg-gray-50 rounded-lg">
+<h4 class="text-sm font-medium text-gray-900 mb-3">Live Status</h4>
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">Current Speed</span>
+<span id="busSpeed" class="text-sm font-medium text-gray-900">45 km/h</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">ETA to Campus</span>
+<span id="busETA" class="text-sm font-medium text-primary">7 mins</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-gray-500">Last Updated</span>
+<span id="lastUpdated" class="text-xs text-gray-500">Just now</span>
+</div>
+</div>
+</div>
+<div class="p-4 bg-gray-50 rounded-lg">
+<h4 class="text-sm font-medium text-gray-900 mb-3">Next Stops</h4>
+<div class="space-y-3">
+<div class="flex items-center">
+<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+<div class="ml-2">
+<p class="text-xs font-medium text-gray-900">Chavara Junction</p>
+<p class="text-xs text-gray-500">2 mins</p>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+<div class="ml-2">
+<p class="text-xs font-medium text-gray-900">Kadappakada</p>
+<p class="text-xs text-gray-500">5 mins</p>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+<div class="ml-2">
+<p class="text-xs font-medium text-gray-900">Campus</p>
+<p class="text-xs text-gray-500">7 mins</p>
+</div>
+</div>
+</div>
+</div>
+<button id="refreshTracking" class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 !rounded-button">
+<i class="ri-refresh-line mr-2"></i>
+Refresh
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4">
+<h4 class="text-sm font-medium text-gray-900">Live Bus Status</h4>
+<ul class="mt-2 divide-y divide-gray-200">
+<li class="py-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-green-600 mr-2">
+<i class="ri-bus-wifi-line"></i>
+</div>
+<div>
+<span class="text-sm font-medium text-gray-900">AMR-101</span>
+<p class="text-xs text-gray-500">Campus → Kollam</p>
+</div>
+</div>
+<div class="flex items-center">
+<span class="text-xs font-medium text-green-600 mr-2">Moving</span>
+<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+</div>
+</div>
+</li>
+<li class="py-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-blue-600 mr-2">
+<i class="ri-bus-line"></i>
+</div>
+<div>
+<span class="text-sm font-medium text-gray-900">AMR-102</span>
+<p class="text-xs text-gray-500">Vallikavu → Campus</p>
+</div>
+</div>
+<div class="flex items-center">
+<span class="text-xs font-medium text-blue-600 mr-2">At Stop</span>
+<div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+</div>
+</div>
+</li>
+<li class="py-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-green-600 mr-2">
+<i class="ri-bus-wifi-line"></i>
+</div>
+<div>
+<span class="text-sm font-medium text-gray-900">AMR-103</span>
+<p class="text-xs text-gray-500">Karunagappally → Campus</p>
+</div>
+</div>
+<div class="flex items-center">
+<span class="text-xs font-medium text-green-600 mr-2">Moving</span>
+<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+</div>
+</div>
+</li>
+<li class="py-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center text-green-600 mr-2">
+<i class="ri-bus-wifi-line"></i>
+</div>
+<div>
+<span class="text-sm font-medium text-gray-900">AMR-104</span>
+<p class="text-xs text-gray-500">Oachira → Campus</p>
+</div>
+</div>
+<div class="flex items-center">
+<span class="text-xs font-medium text-green-600 mr-2">Moving</span>
+<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+</div>
+</div>
+</li>
+</ul>
+<div class="mt-4">
+<h4 class="text-sm font-medium text-gray-900">Major Routes</h4>
+<div class="mt-2 text-xs text-gray-600 space-y-1">
+<p>• Kollam ↔ Campus (via Karunagappally)</p>
+<p>• Vallikavu ↔ Campus (via Clappana)</p>
+<p>• Oachira ↔ Campus (via Krishnapuram)</p>
+<p>• Karunagappally ↔ Campus (Direct)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fee Payment Analytics -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Fee Payment Analytics</h3>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div id="fee-chart" style="height: 250px;" class="mb-6"></div>
+<div class="mt-4">
+<h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">Upcoming Payments</h4>
+<ul class="mt-2 divide-y divide-gray-200 dark:divide-gray-700">
+<li class="py-2 flex justify-between items-center">
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-gray-100">Hostel Fee (Summer)</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: May 10, 2025</p>
+</div>
+<div class="flex items-center">
+<span class="text-sm font-medium text-gray-900 dark:text-gray-100 mr-3">₹25,000</span>
+<button class="bg-primary text-white px-3 py-1 text-xs font-medium hover:bg-indigo-600 transition-colors duration-200 !rounded-button whitespace-nowrap">Pay Now</button>
+</div>
+</li>
+<li class="py-2 flex justify-between items-center">
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-gray-100">Lab Development Fee</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Due: May 15, 2025</p>
+</div>
+<div class="flex items-center">
+<span class="text-sm font-medium text-gray-900 dark:text-gray-100 mr-3">₹5,000</span>
+<button class="bg-primary text-white px-3 py-1 text-xs font-medium hover:bg-indigo-600 transition-colors duration-200 !rounded-button whitespace-nowrap">Pay Now</button>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Placement & Career Section -->
+<div class="mt-8 mb-8">
+<h2 class="text-lg font-medium text-gray-900">Placement & Career</h2>
+<div class="mt-4 grid grid-cols-1 gap-5 lg:grid-cols-3">
+<!-- Coding Practice Analytics -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Coding Practice</h3>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div id="coding-chart" style="height: 200px;"></div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-gray-500">Problems Solved</span>
+<span class="text-lg font-medium text-gray-900">247</span>
+</div>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-sm font-medium text-gray-500">Current Streak</span>
+<span class="text-lg font-medium text-gray-900">12 days</span>
+</div>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View detailed analytics</a>
+</div>
+</div>
+</div>
+<!-- Placement Statistics -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Placement Statistics</h3>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div id="placement-chart" style="height: 200px;"></div>
+<div class="mt-4">
+<h4 class="text-sm font-medium text-gray-900">Top Recruiters</h4>
+<ul class="mt-2 divide-y divide-gray-200">
+<li class="py-2 flex justify-between">
+<span class="text-sm text-gray-700">Microsoft</span>
+<span class="text-sm font-medium text-gray-900">28 offers</span>
+</li>
+<li class="py-2 flex justify-between">
+<span class="text-sm text-gray-700">Google</span>
+<span class="text-sm font-medium text-gray-900">22 offers</span>
+</li>
+<li class="py-2 flex justify-between">
+<span class="text-sm text-gray-700">Amazon</span>
+<span class="text-sm font-medium text-gray-900">19 offers</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">View all statistics</a>
+</div>
+</div>
+</div>
+<!-- Alumni Network -->
+<div class="bg-white overflow-hidden shadow rounded-lg">
+<div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+<h3 class="text-lg font-medium leading-6 text-gray-900">Alumni Network</h3>
+</div>
+<div class="px-4 py-5 sm:p-6">
+<div id="alumni-chart" style="height: 200px;"></div>
+<div class="mt-4">
+<h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">Mentorship Opportunities</h4>
+<ul class="mt-2 divide-y divide-gray-200 dark:divide-gray-700">
+<li class="py-2">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
+<span class="text-xs font-medium text-primary dark:text-indigo-300">VK</span>
+</div>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium text-gray-900 dark:text-gray-100">Vivek Kumar</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Senior SDE, Amazon • 2018 Batch</p>
+</div>
+</div>
+</li>
+<li class="py-2">
+<div class="flex items-center">
+<div class="flex-shrink-0">
+<div class="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+<span class="text-xs font-medium text-green-600 dark:text-green-300">PR</span>
+</div>
+</div>
+<div class="ml-3">
+<p class="text-sm font-medium text-gray-900 dark:text-gray-100">Priya Reddy</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Product Manager, Google • 2017 Batch</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="bg-gray-50 px-4 py-4 sm:px-6">
+<div class="text-sm">
+<a href="#" class="font-medium text-primary hover:text-indigo-500">Connect with alumni</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+// Search functionality
+function handleSearch(event) {
+const searchTerm = event.target.value.toLowerCase();
+const searchableElements = document.querySelectorAll('.searchable');
+// If search term is empty, show all elements
+if (!searchTerm) {
+searchableElements.forEach(element => {
+const parentCard = element.closest('.bg-white');
+if (parentCard) {
+parentCard.style.display = 'block';
+}
+});
+return;
+}
+// Filter elements based on search term
+searchableElements.forEach(element => {
+const text = element.textContent.toLowerCase();
+const parentCard = element.closest('.bg-white');
+if (parentCard) {
+if (text.includes(searchTerm)) {
+parentCard.style.display = 'block';
+} else {
+parentCard.style.display = 'none';
+}
+}
+});
+}
+// Add searchable class to elements that should be searchable
+document.addEventListener('DOMContentLoaded', function() {
+// Add searchable class to course names
+document.querySelectorAll('.text-gray-900').forEach(element => {
+if (element.textContent.includes('CS')) {
+element.classList.add('searchable');
+}
+});
+// Add searchable class to professor names
+document.querySelectorAll('.text-gray-500').forEach(element => {
+if (element.textContent.includes('Prof.')) {
+element.classList.add('searchable');
+}
+});
+// Add searchable class to project titles
+document.querySelectorAll('h3.text-lg').forEach(element => {
+element.classList.add('searchable');
+});
+});
+// User Menu Toggle
+let userMenuVisible = false;
+function toggleUserMenu() {
+const userMenu = document.getElementById('userMenu');
+userMenuVisible = !userMenuVisible;
+userMenu.classList.toggle('hidden');
+}
+document.getElementById('userMenuButton').addEventListener('click', toggleUserMenu);
+document.addEventListener('click', function(event) {
+const userMenu = document.getElementById('userMenu');
+const userMenuButton = document.getElementById('userMenuButton');
+if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+userMenu.classList.add('hidden');
+userMenuVisible = false;
+}
+});
+// Modal Functions
+function showLoginModal() {
+document.getElementById('loginModal').classList.remove('hidden');
+}
+function closeLoginModal() {
+document.getElementById('loginModal').classList.add('hidden');
+}
+function showSignupModal() {
+document.getElementById('signupModal').classList.remove('hidden');
+}
+function closeSignupModal() {
+document.getElementById('signupModal').classList.add('hidden');
+}
+function showDeleteAccountModal() {
+document.getElementById('deleteAccountModal').classList.remove('hidden');
+}
+function closeDeleteAccountModal() {
+document.getElementById('deleteAccountModal').classList.add('hidden');
+}
+// Toast Function
+function showToast(message, type) {
+const toast = document.getElementById('toast');
+toast.textContent = message;
+toast.classList.remove('hidden', 'bg-green-500', 'bg-red-500');
+toast.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+setTimeout(() => {
+toast.classList.add('hidden');
+}, 3000);
+}
+// Form Submissions
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+e.preventDefault();
+const email = document.getElementById('loginEmail').value;
+const password = document.getElementById('loginPassword').value;
+// Add your login validation logic here
+if (email && password) {
+showToast('Successfully signed in!', 'success');
+closeLoginModal();
+} else {
+showToast('Please fill in all fields', 'error');
+}
+});
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+e.preventDefault();
+const name = document.getElementById('signupName').value;
+const email = document.getElementById('signupEmail').value;
+const password = document.getElementById('signupPassword').value;
+const confirmPassword = document.getElementById('signupConfirmPassword').value;
+const role = document.getElementById('signupRole').value;
+if (password !== confirmPassword) {
+showToast('Passwords do not match', 'error');
+return;
+}
+if (name && email && password && confirmPassword && role) {
+showToast('Account created successfully!', 'success');
+closeSignupModal();
+} else {
+showToast('Please fill in all fields', 'error');
+}
+});
+function deleteAccount() {
+const password = document.getElementById('deleteAccountPassword').value;
+if (password) {
+showToast('Account deleted successfully', 'success');
+closeDeleteAccountModal();
+} else {
+showToast('Please enter your password', 'error');
+}
+}
+document.addEventListener('DOMContentLoaded', function() {
+// Navigation functionality
+const navLinks = document.querySelectorAll('.nav-link');
+const mainContent = document.querySelector('.flex-1.overflow-auto.bg-gray-50');
+function handleNavigation(e) {
+e.preventDefault();
+// Remove active state from all links
+navLinks.forEach(link => {
+link.classList.remove('bg-indigo-50', 'text-primary');
+link.classList.add('text-gray-600');
+});
+// Add active state to clicked link
+this.classList.remove('text-gray-600');
+this.classList.add('bg-indigo-50', 'text-primary');
+// Show loading state
+const section = this.getAttribute('data-section');
+showToast(`Loading ${section} section...`, 'success');
+// Simulate loading content
+setTimeout(() => {
+if (section === 'dashboard') {
+// Already on dashboard, just refresh charts
+const charts = [gpaChart, subjectChart, attendanceChart, publicationChart, feeChart, codingChart, placementChart, alumniChart];
+charts.forEach(chart => chart && chart.resize());
+} else {
+showToast(`${section.charAt(0).toUpperCase() + section.slice(1)} section loaded`, 'success');
+}
+}, 500);
+}
+// Add click handlers to all nav links
+navLinks.forEach(link => {
+link.addEventListener('click', handleNavigation);
+});
+// GPA Chart
+const gpaChart = echarts.init(document.getElementById('gpa-chart'));
+const gpaOption = {
+animation: false,
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+top: 10,
+right: 10,
+bottom: 30,
+left: 50
+},
+xAxis: {
+type: 'category',
+data: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+}
+},
+yAxis: {
+type: 'value',
+min: 7,
+max: 10,
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+},
+splitLine: {
+lineStyle: {
+color: '#f5f5f5'
+}
+}
+},
+series: [{
+data: [8.2, 8.4, 8.1, 8.7, 8.9],
+type: 'line',
+smooth: true,
+symbol: 'none',
+lineStyle: {
+width: 3,
+color: 'rgba(87, 181, 231, 1)'
+},
+areaStyle: {
+color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+{ offset: 0, color: 'rgba(87, 181, 231, 0.2)' },
+{ offset: 1, color: 'rgba(87, 181, 231, 0.05)' }
+])
+}
+}]
+};
+gpaChart.setOption(gpaOption);
+// Subject Heatmap
+const subjectChart = echarts.init(document.getElementById('subject-heatmap'));
+const subjectOption = {
+animation: false,
+tooltip: {
+position: 'top',
+formatter: function (params) {
+return params.value[2] + '/10';
+},
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+top: 40,
+right: 20,
+bottom: 80,
+left: 120,
+containLabel: true
+},
+xAxis: {
+type: 'category',
+data: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5'],
+splitArea: {
+show: true
+},
+axisLabel: {
+color: '#1f2937',
+interval: 0,
+rotate: 45,
+margin: 20
+},
+axisTick: {
+alignWithLabel: true
+}
+},
+yAxis: {
+type: 'category',
+data: ['Mathematics', 'Programming', 'Electronics', 'Data Structures', 'Networks', 'Databases', 'AI/ML'],
+splitArea: {
+show: true
+},
+axisLabel: {
+color: '#1f2937',
+interval: 0,
+margin: 16,
+formatter: function (value) {
+return value.length > 12 ? value.substring(0, 12) + '...' : value;
+}
+}
+},
+visualMap: {
+min: 5,
+max: 10,
+calculable: true,
+orient: 'horizontal',
+left: 'center',
+bottom: 10,
+inRange: {
+color: ['rgba(87, 181, 231, 0.3)', 'rgba(87, 181, 231, 1)']
+},
+textStyle: {
+color: '#1f2937'
+}
+},
+series: [{
+name: 'Score',
+type: 'heatmap',
+data: [
+[0, 0, 8], [0, 1, 9], [0, 2, 7], [0, 3, 8], [0, 4, 9],
+[1, 0, 7], [1, 1, 8], [1, 2, 9], [1, 3, 9], [1, 4, 8],
+[2, 0, 9], [2, 1, 7], [2, 2, 8], [2, 3, 7], [2, 4, 7],
+[3, 0, 8], [3, 1, 9], [3, 2, 8], [3, 3, 9], [3, 4, 9],
+[4, 0, 7], [4, 1, 8], [4, 2, 7], [4, 3, 8], [4, 4, 8],
+[5, 0, 8], [5, 1, 9], [5, 2, 9], [5, 3, 8], [5, 4, 9],
+[6, 0, 7], [6, 1, 8], [6, 2, 8], [6, 3, 9], [6, 4, 9]
+],
+label: {
+show: true,
+color: '#1f2937'
+},
+emphasis: {
+itemStyle: {
+shadowBlur: 10,
+shadowColor: 'rgba(0, 0, 0, 0.5)'
+}
+},
+itemStyle: {
+borderWidth: 1,
+borderColor: '#fff'
+}
+}]
+};
+subjectChart.setOption(subjectOption);
+// Attendance Chart
+const attendanceChart = echarts.init(document.getElementById('attendance-chart'));
+const attendanceOption = {
+animation: false,
+tooltip: {
+trigger: 'item',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+bottom: 0,
+left: 'center',
+textStyle: {
+color: '#1f2937'
+}
+},
+series: [
+{
+name: 'Attendance',
+type: 'pie',
+radius: ['50%', '70%'],
+avoidLabelOverlap: false,
+itemStyle: {
+borderRadius: 8,
+borderColor: '#fff',
+borderWidth: 2
+},
+label: {
+show: false,
+position: 'center'
+},
+emphasis: {
+label: {
+show: true,
+fontSize: '18',
+fontWeight: 'bold'
+}
+},
+labelLine: {
+show: false
+},
+data: [
+{ value: 72, name: 'Computer Networks', itemStyle: { color: 'rgba(252, 141, 98, 1)' } },
+{ value: 82, name: 'Database Systems', itemStyle: { color: 'rgba(251, 191, 114, 1)' } },
+{ value: 95, name: 'Machine Learning', itemStyle: { color: 'rgba(141, 211, 199, 1)' } },
+{ value: 89, name: 'Software Engineering', itemStyle: { color: 'rgba(87, 181, 231, 1)' } }
+]
+}
+]
+};
+attendanceChart.setOption(attendanceOption);
+// Publication Chart
+const publicationChart = echarts.init(document.getElementById('publication-chart'));
+const publicationOption = {
+animation: false,
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+top: 10,
+right: 10,
+bottom: 30,
+left: 40
+},
+xAxis: {
+type: 'category',
+data: ['2023', '2024', '2025'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+},
+splitLine: {
+lineStyle: {
+color: '#f5f5f5'
+}
+}
+},
+series: [{
+name: 'Publications',
+type: 'bar',
+barWidth: '40%',
+data: [1, 2, 2],
+itemStyle: {
+color: 'rgba(87, 181, 231, 1)',
+borderRadius: 4
+}
+}, {
+name: 'Citations',
+type: 'line',
+smooth: true,
+symbol: 'circle',
+symbolSize: 6,
+data: [3, 9, 15],
+itemStyle: {
+color: 'rgba(251, 191, 114, 1)'
+},
+lineStyle: {
+width: 3,
+color: 'rgba(251, 191, 114, 1)'
+}
+}]
+};
+publicationChart.setOption(publicationOption);
+// Fee Chart
+const feeChart = echarts.init(document.getElementById('fee-chart'));
+const feeOption = {
+animation: false,
+tooltip: {
+trigger: 'item',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+bottom: 0,
+left: 'center',
+textStyle: {
+color: '#1f2937'
+}
+},
+series: [
+{
+name: 'Fee Distribution',
+type: 'pie',
+radius: '70%',
+center: ['50%', '45%'],
+data: [
+{ value: 65000, name: 'Tuition Fee', itemStyle: { color: 'rgba(87, 181, 231, 1)' } },
+{ value: 45000, name: 'Hostel Fee', itemStyle: { color: 'rgba(141, 211, 199, 1)' } },
+{ value: 15000, name: 'Mess Fee', itemStyle: { color: 'rgba(251, 191, 114, 1)' } },
+{ value: 10000, name: 'Other Charges', itemStyle: { color: 'rgba(252, 141, 98, 1)' } }
+],
+emphasis: {
+itemStyle: {
+shadowBlur: 10,
+shadowOffsetX: 0,
+shadowColor: 'rgba(0, 0, 0, 0.5)'
+}
+},
+label: {
+formatter: '{b}: ₹{c}'
+}
+}
+]
+};
+feeChart.setOption(feeOption);
+// Coding Practice Chart
+const codingChart = echarts.init(document.getElementById('coding-chart'));
+const codingOption = {
+animation: false,
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+top: 10,
+right: 10,
+bottom: 30,
+left: 40
+},
+xAxis: {
+type: 'category',
+data: ['Jan', 'Feb', 'Mar', 'Apr'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+},
+splitLine: {
+lineStyle: {
+color: '#f5f5f5'
+}
+}
+},
+series: [{
+name: 'Problems Solved',
+type: 'bar',
+barWidth: '40%',
+data: [42, 58, 65, 82],
+itemStyle: {
+color: 'rgba(87, 181, 231, 1)',
+borderRadius: 4
+}
+}]
+};
+codingChart.setOption(codingOption);
+// Placement Chart
+const placementChart = echarts.init(document.getElementById('placement-chart'));
+const placementOption = {
+animation: false,
+tooltip: {
+trigger: 'axis',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+grid: {
+top: 10,
+right: 10,
+bottom: 30,
+left: 40
+},
+xAxis: {
+type: 'category',
+data: ['CSE', 'ECE', 'ME', 'CE', 'EE'],
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+}
+},
+yAxis: {
+type: 'value',
+axisLine: {
+lineStyle: {
+color: '#ddd'
+}
+},
+axisLabel: {
+color: '#1f2937'
+},
+splitLine: {
+lineStyle: {
+color: '#f5f5f5'
+}
+}
+},
+series: [{
+name: 'Placement %',
+type: 'bar',
+barWidth: '40%',
+data: [95, 88, 75, 82, 79],
+itemStyle: {
+color: function(params) {
+const colors = [
+'rgba(87, 181, 231, 1)',
+'rgba(141, 211, 199, 1)',
+'rgba(251, 191, 114, 1)',
+'rgba(252, 141, 98, 1)',
+'rgba(190, 186, 218, 1)'
+];
+return colors[params.dataIndex];
+},
+borderRadius: 4
+}
+}]
+};
+placementChart.setOption(placementOption);
+// Alumni Chart
+const alumniChart = echarts.init(document.getElementById('alumni-chart'));
+const alumniOption = {
+animation: false,
+tooltip: {
+trigger: 'item',
+backgroundColor: 'rgba(255, 255, 255, 0.8)',
+borderColor: '#eee',
+borderWidth: 1,
+textStyle: {
+color: '#1f2937'
+}
+},
+legend: {
+bottom: 0,
+left: 'center',
+textStyle: {
+color: '#1f2937'
+}
+},
+series: [
+{
+name: 'Alumni Distribution',
+type: 'pie',
+radius: ['40%', '70%'],
+center: ['50%', '45%'],
+avoidLabelOverlap: false,
+itemStyle: {
+borderRadius: 8,
+borderColor: '#fff',
+borderWidth: 2
+},
+label: {
+show: false,
+position: 'center'
+},
+emphasis: {
+label: {
+show: true,
+fontSize: '14',
+fontWeight: 'bold'
+}
+},
+labelLine: {
+show: false
+},
+data: [
+{ value: 42, name: 'IT/Software', itemStyle: { color: 'rgba(87, 181, 231, 1)' } },
+{ value: 23, name: 'Research', itemStyle: { color: 'rgba(141, 211, 199, 1)' } },
+{ value: 15, name: 'Higher Studies', itemStyle: { color: 'rgba(251, 191, 114, 1)' } },
+{ value: 20, name: 'Other Industries', itemStyle: { color: 'rgba(252, 141, 98, 1)' } }
+]
+}
+]
+};
+alumniChart.setOption(alumniOption);
+// Responsive resize
+window.addEventListener('resize', function() {
+gpaChart.resize();
+subjectChart.resize();
+attendanceChart.resize();
+publicationChart.resize();
+feeChart.resize();
+codingChart.resize();
+placementChart.resize();
+alumniChart.resize();
+});
+});
+// Dark Mode Implementation
+document.addEventListener('DOMContentLoaded', function() {
+// Bus Tracking Modal
+const trackBusButton = document.getElementById('trackBusButton');
+const busTrackingModal = document.getElementById('busTrackingModal');
+const closeBusTrackingModal = document.getElementById('closeBusTrackingModal');
+const refreshTracking = document.getElementById('refreshTracking');
+const busMarker = document.getElementById('busMarker');
+const busSpeed = document.getElementById('busSpeed');
+const busETA = document.getElementById('busETA');
+const lastUpdated = document.getElementById('lastUpdated');
+// Show modal
+trackBusButton.addEventListener('click', () => {
+busTrackingModal.classList.remove('hidden');
+startBusTracking();
+});
+// Close modal
+closeBusTrackingModal.addEventListener('click', () => {
+busTrackingModal.classList.add('hidden');
+stopBusTracking();
+});
+// Click outside to close
+busTrackingModal.addEventListener('click', (e) => {
+if (e.target === busTrackingModal) {
+busTrackingModal.classList.add('hidden');
+stopBusTracking();
+}
+});
+let trackingInterval;
+function startBusTracking() {
+updateBusLocation();
+trackingInterval = setInterval(updateBusLocation, 3000);
+}
+function stopBusTracking() {
+clearInterval(trackingInterval);
+}
+function updateBusLocation() {
+// Simulate bus movement
+const newLeft = 40 + (Math.random() * 2 - 1);
+const newTop = 45 + (Math.random() * 2 - 1);
+busMarker.style.left = `${newLeft}%`;
+busMarker.style.top = `${newTop}%`;
+// Update tracking info
+busSpeed.textContent = `${Math.floor(40 + Math.random() * 10)} km/h`;
+const eta = Math.floor(5 + Math.random() * 4);
+busETA.textContent = `${eta} mins`;
+lastUpdated.textContent = 'Just now';
+// Animate the update
+busMarker.classList.add('scale-110');
+setTimeout(() => busMarker.classList.remove('scale-110'), 200);
+}
+refreshTracking.addEventListener('click', () => {
+refreshTracking.classList.add('animate-spin');
+updateBusLocation();
+setTimeout(() => refreshTracking.classList.remove('animate-spin'), 1000);
+});
+const darkModeToggle = document.querySelector('.ri-moon-line');
+const html = document.documentElement;
+// Check for saved dark mode preference
+const isDarkMode = localStorage.getItem('darkMode') === 'true';
+if (isDarkMode) {
+html.classList.add('dark');
+darkModeToggle.classList.remove('ri-moon-line');
+darkModeToggle.classList.add('ri-sun-line');
+}
+darkModeToggle.addEventListener('click', function() {
+if (this.classList.contains('ri-moon-line')) {
+// Switch to dark mode
+html.classList.add('dark');
+this.classList.remove('ri-moon-line');
+this.classList.add('ri-sun-line');
+localStorage.setItem('darkMode', 'true');
+// Update chart themes
+const charts = [gpaChart, subjectChart, attendanceChart, publicationChart, feeChart, codingChart, placementChart, alumniChart];
+charts.forEach(chart => {
+if (chart) {
+const option = chart.getOption();
+// Update text colors
+if (option.xAxis) {
+option.xAxis[0].axisLabel.color = '#e5e7eb';
+option.yAxis[0].axisLabel.color = '#e5e7eb';
+}
+if (option.legend) {
+option.legend.textStyle.color = '#e5e7eb';
+}
+if (option.tooltip) {
+option.tooltip.backgroundColor = 'rgba(31, 41, 55, 0.8)';
+option.tooltip.borderColor = '#374151';
+option.tooltip.textStyle.color = '#e5e7eb';
+}
+chart.setOption(option);
+}
+});
+} else {
+// Switch to light mode
+html.classList.remove('dark');
+this.classList.remove('ri-sun-line');
+this.classList.add('ri-moon-line');
+localStorage.setItem('darkMode', 'false');
+// Update chart themes
+const charts = [gpaChart, subjectChart, attendanceChart, publicationChart, feeChart, codingChart, placementChart, alumniChart];
+charts.forEach(chart => {
+if (chart) {
+const option = chart.getOption();
+// Reset text colors
+if (option.xAxis) {
+option.xAxis[0].axisLabel.color = '#1f2937';
+option.yAxis[0].axisLabel.color = '#1f2937';
+}
+if (option.legend) {
+option.legend.textStyle.color = '#1f2937';
+}
+if (option.tooltip) {
+option.tooltip.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+option.tooltip.borderColor = '#eee';
+option.tooltip.textStyle.color = '#1f2937';
+}
+chart.setOption(option);
+}
+});
+}
+});
+});
+</script>
+</body>
+</html>

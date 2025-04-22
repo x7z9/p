@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Portal | Courses</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4f46e5',secondary:'#10b981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+    font-family: 'Inter', sans-serif;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.custom-checkbox {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.custom-checkbox:checked {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+.custom-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.custom-radio {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.custom-radio:checked {
+    border-color: #4f46e5;
+}
+.custom-radio:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4f46e5;
+}
+.custom-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.custom-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e5e7eb;
+    transition: .4s;
+    border-radius: 34px;
+}
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .switch-slider {
+    background-color: #4f46e5;
+}
+input:checked + .switch-slider:before {
+    transform: translateX(20px);
+}
+.course-card-hover:hover .course-card-actions {
+    opacity: 1;
+}
+.course-card-actions {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <div class="hidden md:flex md:flex-shrink-0">
+        <div class="flex flex-col w-64 bg-white border-r border-gray-200">
+            <div class="flex items-center justify-center h-16 px-4 border-b border-gray-200">
+                <h1 class="text-xl font-['Pacifico'] text-primary">University name</h1>
+            </div>
+            <div class="flex flex-col flex-grow px-4 py-4 overflow-y-auto scrollbar-hide">
+                <div class="space-y-4">
+                    <div>
+    <a href="../../Engineering_Students_Academic_Dashboard.html" data-readdy="true" class="flex items-center px-4 py-3 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+        <div class="w-5 h-5 flex items-center justify-center mr-3">
+            <i class="ri-dashboard-line"></i>
+        </div>
+        Dashboard
+    </a>
+</div>
+                    <div>
+                        <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Academics</p>
+                        <div class="mt-2 space-y-1">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-primary bg-indigo-50 rounded-md">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-book-open-line"></i>
+                                </div>
+                                Courses
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-calendar-line"></i>
+                                </div>
+                                Schedule
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-user-follow-line"></i>
+                                </div>
+                                Attendance
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-file-chart-line"></i>
+                                </div>
+                                Grades
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Research</p>
+                        <div class="mt-2 space-y-1">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-flask-line"></i>
+                                </div>
+                                Projects
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-article-line"></i>
+                                </div>
+                                Publications
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-funds-box-line"></i>
+                                </div>
+                                Funding
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Campus</p>
+                        <div class="mt-2 space-y-1">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-building-line"></i>
+                                </div>
+                                Hostel
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-bus-line"></i>
+                                </div>
+                                Transport
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-wallet-3-line"></i>
+                                </div>
+                                Fees
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Extracurricular</p>
+                        <div class="mt-2 space-y-1">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-team-line"></i>
+                                </div>
+                                Clubs
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-basketball-line"></i>
+                                </div>
+                                Sports
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-code-box-line"></i>
+                                </div>
+                                Hackathons
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Career</p>
+                        <div class="mt-2 space-y-1">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-briefcase-line"></i>
+                                </div>
+                                Placements
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-primary">
+                                <div class="w-5 h-5 flex items-center justify-center mr-3">
+                                    <i class="ri-user-star-line"></i>
+                                </div>
+                                Alumni Network
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-shrink-0 p-4 border-t border-gray-200">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                            <span class="text-primary font-medium">RS</span>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">Student Name</p>
+                        <p class="text-xs font-medium text-gray-500">B.Tech CSE • 3rd Year</p>
+                    </div>
+                    <div class="ml-auto">
+                        <button class="flex items-center justify-center w-8 h-8 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-500">
+                            <div class="w-5 h-5 flex items-center justify-center">
+                                <i class="ri-logout-box-line"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex flex-col flex-1 overflow-hidden">
+        <!-- Top navigation -->
+        <div class="flex items-center h-16 px-4 bg-white border-b border-gray-200 sm:px-6 md:px-8">
+            <button class="md:hidden text-gray-500 focus:outline-none">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </button>
+            <div class="flex-1 flex justify-between items-center">
+                <div class="flex items-center md:ml-0">
+                    <div class="relative w-64">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                <i class="ri-search-line"></i>
+                            </div>
+                        </div>
+                        <input type="text" id="courseSearchInput" class="block w-full pl-10 pr-3 py-2 border-none rounded-md bg-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white sm:text-sm" placeholder="Search courses...">
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex">
+                        <button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-500">
+                                <i class="ri-notification-3-line"></i>
+                            </div>
+                        </button>
+                        <button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+                            <div class="w-5 h-5 flex items-center justify-center text-gray-500">
+                                <i class="ri-moon-line"></i>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="hidden md:flex items-center border-l border-gray-200 pl-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center cursor-pointer" id="userMenuButton">
+                                <span class="text-primary font-medium">RS</span>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Student Name</p>
+                            <p class="text-xs font-medium text-gray-500">B.Tech CSE • 3rd Year</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content area -->
+        <div class="flex-1 overflow-auto bg-gray-50">
+            <div class="py-6 px-4 sm:px-6 md:px-8">
+                <div class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Courses</h1>
+                            <p class="mt-1 text-sm text-gray-500">Manage your enrolled courses and register for new ones</p>
+                        </div>
+                        <a href="../../Engineering_Students_Academic_Dashboard.html" data-readdy="true" class="flex items-center text-sm text-primary hover:text-indigo-700">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                <i class="ri-arrow-left-line"></i>
+                            </div>
+                            Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course Filter Bar -->
+                <div class="bg-white p-4 rounded-lg shadow mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                        <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                            <div class="w-full sm:w-48">
+                                <label for="semesterFilter" class="block text-xs font-medium text-gray-500 mb-1">Semester</label>
+                                <div class="relative">
+                                    <select id="semesterFilter" class="block w-full pl-3 pr-10 py-2 text-sm border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                                        <option value="current">Current (Spring 2025)</option>
+                                        <option value="fall2024">Fall 2024</option>
+                                        <option value="spring2024">Spring 2024</option>
+                                        <option value="fall2023">Fall 2023</option>
+                                        <option value="all">All Semesters</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                        <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                            <i class="ri-arrow-down-s-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-48">
+                                <label for="departmentFilter" class="block text-xs font-medium text-gray-500 mb-1">Department</label>
+                                <div class="relative">
+                                    <select id="departmentFilter" class="block w-full pl-3 pr-10 py-2 text-sm border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                                        <option value="all">All Departments</option>
+                                        <option value="cse">Computer Science</option>
+                                        <option value="ece">Electronics</option>
+                                        <option value="me">Mechanical</option>
+                                        <option value="ce">Civil</option>
+                                        <option value="ee">Electrical</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                        <div class="w-5 h-5 flex items-center justify-center text-gray-400">
+                                            <i class="ri-arrow-down-s-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-gray-500">View:</span>
+                                <div class="flex p-1 bg-gray-100 rounded-full">
+                                    <button id="gridViewBtn" class="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-sm">
+                                        <div class="w-4 h-4 flex items-center justify-center text-primary">
+                                            <i class="ri-grid-line"></i>
+                                        </div>
+                                    </button>
+                                    <button id="listViewBtn" class="flex items-center justify-center w-8 h-8 rounded-full text-gray-500 hover:text-gray-700">
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-list-check"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <button id="refreshCoursesBtn" class="flex items-center justify-center p-2 text-gray-500 hover:text-gray-700 bg-gray-100 rounded-full">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-refresh-line"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Tabs -->
+                <div class="mb-6">
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-8">
+                            <button id="enrolledTabBtn" class="border-primary text-primary whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Enrolled Courses
+                            </button>
+                            <button id="availableTabBtn" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Available for Registration
+                            </button>
+                            <button id="completedTabBtn" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                                Completed Courses
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Enrolled Courses Section -->
+                <div id="enrolledCoursesSection" class="mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Course Card 1 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden course-card-hover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-primary">
+                                            CS4023
+                                        </span>
+                                        <h3 class="mt-2 text-lg font-medium text-gray-900">Machine Learning</h3>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-sm font-medium text-gray-900">Credits: 4</span>
+                                        <span class="mt-1 text-sm font-medium text-green-600">Grade: A</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                <span class="text-xs font-medium text-primary">AG</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900">Prof. Ananya Gupta</p>
+                                            <p class="text-xs text-gray-500">ananya.gupta@university.edu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-calendar-line"></i>
+                                        </div>
+                                        <span>Tuesday, Thursday • 9:00 - 10:30 AM</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-map-pin-line"></i>
+                                        </div>
+                                        <span>Room 302, CS Building</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-user-follow-line"></i>
+                                        </div>
+                                        <span>Attendance: 95%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="ml-2 text-sm text-gray-500">In Progress</span>
+                                    </div>
+                                    <div class="course-card-actions flex space-x-2">
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-download-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-more-2-fill"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-5 py-3">
+                                <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                    View Course Materials
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Course Card 2 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden course-card-hover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-primary">
+                                            CS4021
+                                        </span>
+                                        <h3 class="mt-2 text-lg font-medium text-gray-900">Computer Networks</h3>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-sm font-medium text-gray-900">Credits: 4</span>
+                                        <span class="mt-1 text-sm font-medium text-yellow-600">Grade: B+</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                                <span class="text-xs font-medium text-blue-600">VS</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900">Prof. Vikram Singh</p>
+                                            <p class="text-xs text-gray-500">vikram.singh@university.edu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-calendar-line"></i>
+                                        </div>
+                                        <span>Monday, Wednesday • 11:00 - 12:30 PM</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-map-pin-line"></i>
+                                        </div>
+                                        <span>Room 204, CS Building</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-user-follow-line"></i>
+                                        </div>
+                                        <span>Attendance: 72%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="ml-2 text-sm text-gray-500">In Progress</span>
+                                    </div>
+                                    <div class="course-card-actions flex space-x-2">
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-download-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-more-2-fill"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-5 py-3">
+                                <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                    View Course Materials
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Course Card 3 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden course-card-hover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-primary">
+                                            CS4022
+                                        </span>
+                                        <h3 class="mt-2 text-lg font-medium text-gray-900">Database Systems</h3>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-sm font-medium text-gray-900">Credits: 4</span>
+                                        <span class="mt-1 text-sm font-medium text-green-600">Grade: A-</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+                                                <span class="text-xs font-medium text-pink-600">MP</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900">Prof. Meera Patel</p>
+                                            <p class="text-xs text-gray-500">meera.patel@university.edu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-calendar-line"></i>
+                                        </div>
+                                        <span>Monday, Wednesday • 2:00 - 3:30 PM</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-map-pin-line"></i>
+                                        </div>
+                                        <span>Lab 103, CS Building</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-user-follow-line"></i>
+                                        </div>
+                                        <span>Attendance: 82%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="ml-2 text-sm text-gray-500">In Progress</span>
+                                    </div>
+                                    <div class="course-card-actions flex space-x-2">
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-download-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-more-2-fill"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-5 py-3">
+                                <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                    View Course Materials
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Course Card 4 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden course-card-hover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-primary">
+                                            CS4024
+                                        </span>
+                                        <h3 class="mt-2 text-lg font-medium text-gray-900">Software Engineering</h3>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-sm font-medium text-gray-900">Credits: 4</span>
+                                        <span class="mt-1 text-sm font-medium text-green-600">Grade: A</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                                <span class="text-xs font-medium text-green-600">RK</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900">Prof. Rajesh Kumar</p>
+                                            <p class="text-xs text-gray-500">rajesh.kumar@university.edu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-calendar-line"></i>
+                                        </div>
+                                        <span>Tuesday, Thursday • 4:00 - 5:30 PM</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-map-pin-line"></i>
+                                        </div>
+                                        <span>Room 401, CS Building</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-user-follow-line"></i>
+                                        </div>
+                                        <span>Attendance: 89%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="ml-2 text-sm text-gray-500">In Progress</span>
+                                    </div>
+                                    <div class="course-card-actions flex space-x-2">
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-download-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-more-2-fill"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-5 py-3">
+                                <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                    View Course Materials
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Course Card 5 -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden course-card-hover">
+                            <div class="p-5">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-primary">
+                                            CS4025
+                                        </span>
+                                        <h3 class="mt-2 text-lg font-medium text-gray-900">Data Mining</h3>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-sm font-medium text-gray-900">Credits: 3</span>
+                                        <span class="mt-1 text-sm font-medium text-green-600">Grade: A-</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                                <span class="text-xs font-medium text-purple-600">SJ</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-medium text-gray-900">Prof. Sanjay Joshi</p>
+                                            <p class="text-xs text-gray-500">sanjay.joshi@university.edu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-calendar-line"></i>
+                                        </div>
+                                        <span>Wednesday, Friday • 10:00 - 11:30 AM</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-map-pin-line"></i>
+                                        </div>
+                                        <span>Room 305, CS Building</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                            <i class="ri-user-follow-line"></i>
+                                        </div>
+                                        <span>Attendance: 91%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                                    <div class="flex items-center">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                        <span class="ml-2 text-sm text-gray-500">In Progress</span>
+                                    </div>
+                                    <div class="course-card-actions flex space-x-2">
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-download-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-star-line"></i>
+                                            </div>
+                                        </button>
+                                        <button class="p-1 text-gray-400 hover:text-gray-500">
+                                            <div class="w-5 h-5 flex items-center justify-center">
+                                                <i class="ri-more-2-fill"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-5 py-3">
+                                <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                    View Course Materials
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available Courses Section (Hidden by default) -->
+                <div id="availableCoursesSection" class="hidden mb-8">
+                    <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+                        <div class="px-4 py-5 sm:p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Available Courses for Registration</h3>
+                            <p class="text-sm text-gray-500 mb-6">Spring 2025 registration is open until May 10, 2025. Please check prerequisites before enrolling.</p>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructor</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schedule</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credits</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Seats</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prerequisites</th>
+                                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS5001: Advanced Algorithms</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-primary">RG</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Rahul Gupta</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Mon, Wed • 9:00 - 10:30 AM</div>
+                                                <div class="text-sm text-gray-500">Room 401</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">32/40</div>
+                                                <div class="text-xs text-green-600">8 available</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS4023, CS3001</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                                    Enroll
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS5002: Cloud Computing</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-blue-600">AM</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Amit Mishra</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Tue, Thu • 2:00 - 3:30 PM</div>
+                                                <div class="text-sm text-gray-500">Room 302</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">38/40</div>
+                                                <div class="text-xs text-green-600">2 available</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS4021, CS4022</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                                    Enroll
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS5003: Natural Language Processing</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-pink-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-pink-600">NR</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Neha Reddy</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Wed, Fri • 11:00 - 12:30 PM</div>
+                                                <div class="text-sm text-gray-500">Room 303</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">40/40</div>
+                                                <div class="text-xs text-red-600">Full</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS4023, CS3002</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-xs font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                                    Join Waitlist
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS5004: Blockchain Technology</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-green-600">PK</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Pradeep Kumar</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Mon, Wed • 3:00 - 4:30 PM</div>
+                                                <div class="text-sm text-gray-500">Room 305</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">25/35</div>
+                                                <div class="text-xs text-green-600">10 available</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS4022, CS3003</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                                    Enroll
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS5005: Computer Vision</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-purple-600">VD</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Vivek Desai</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">Tue, Thu • 9:00 - 10:30 AM</div>
+                                                <div class="text-sm text-gray-500">Room 304</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">28/35</div>
+                                                <div class="text-xs text-green-600">7 available</div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CS4023, CS3004</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                                <button class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                                                    Enroll
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completed Courses Section (Hidden by default) -->
+                <div id="completedCoursesSection" class="hidden mb-8">
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <div class="px-4 py-5 sm:p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-medium text-gray-900">Completed Courses</h3>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm text-gray-500">Total Credits:</span>
+                                    <span class="text-sm font-medium text-gray-900">112/180</span>
+                                </div>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semester</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instructor</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credits</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade</th>
+                                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS3001: Data Structures</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Fall 2023</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-primary">SK</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Sunil Kumar</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    A
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-primary hover:text-indigo-700">View Details</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS3002: Operating Systems</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Fall 2023</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-blue-600">RM</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Ravi Mehta</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    A-
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-primary hover:text-indigo-700">View Details</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS3003: Computer Architecture</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Spring 2024</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-pink-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-pink-600">AS</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Anjali Sharma</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    B+
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-primary hover:text-indigo-700">View Details</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS3004: Algorithms</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Spring 2024</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-green-600">VK</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Vijay Kumar</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">4</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    A
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-primary hover:text-indigo-700">View Details</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div>
+                                                    <div class="text-sm font-medium text-gray-900">CS3005: Web Technologies</div>
+                                                    <div class="text-sm text-gray-500">Computer Science</div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Fall 2023</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
+                                                        <span class="text-xs font-medium text-purple-600">NN</span>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <div class="text-sm font-medium text-gray-900">Prof. Neha Nair</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    A+
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="text-primary hover:text-indigo-700">View Details</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Course Details Modal -->
+<div id="courseDetailsModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-lg bg-white">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <span class="inline-flex items-center justify-center h-10 w-10 rounded-md bg-indigo-100 text-primary">
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <i class="ri-book-open-line"></i>
+                    </div>
+                </span>
+                <h3 class="ml-3 text-xl font-medium text-gray-900">CS4023: Machine Learning</h3>
+            </div>
+            <button id="closeCourseDetailsModal" class="text-gray-400 hover:text-gray-500">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-close-line"></i>
+                </div>
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-2">
+                <div class="mb-6">
+                    <h4 class="text-lg font-medium text-gray-900 mb-2">Course Description</h4>
+                    <p class="text-sm text-gray-600">This course provides an introduction to machine learning concepts and algorithms. Students will learn about supervised and unsupervised learning, neural networks, decision trees, and support vector machines. The course includes practical implementations using Python and popular machine learning libraries.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-lg font-medium text-gray-900 mb-2">Learning Objectives</h4>
+                    <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
+                        <li>Understand fundamental machine learning concepts and algorithms</li>
+                        <li>Implement and evaluate machine learning models using Python</li>
+                        <li>Apply appropriate machine learning techniques to solve real-world problems</li>
+                        <li>Analyze and interpret results of machine learning experiments</li>
+                        <li>Understand ethical considerations in machine learning applications</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-lg font-medium text-gray-900 mb-2">Assessment Criteria</h4>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Component</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Weight</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Assignments (5)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Various</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mid-term Exam</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">20%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">March 15, 2025</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Project</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">30%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 1, 2025</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Final Exam</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 20, 2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-1">
+                <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Course Details</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs text-gray-500">Instructor</p>
+                            <div class="flex items-center mt-1">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-primary">AG</span>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">Prof. Ananya Gupta</p>
+                                    <p class="text-xs text-gray-500">ananya.gupta@university.edu</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs text-gray-500">Schedule</p>
+                            <p class="text-sm text-gray-900 mt-1">Tuesday, Thursday • 9:00 - 10:30 AM</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs text-gray-500">Location</p>
+                            <p class="text-sm text-gray-900 mt-1">Room 302, CS Building</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs text-gray-500">Credits</p>
+                            <p class="text-sm text-gray-900 mt-1">4</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs text-gray-500">Prerequisites</p>
+                            <p class="text-sm text-gray-900 mt-1">CS3001, CS3004, MATH2002</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs text-gray-500">Office Hours</p>
+                            <p class="text-sm text-gray-900 mt-1">Monday, Wednesday • 2:00 - 3:30 PM</p>
+                            <p class="text-xs text-gray-500 mt-1">Room 405, Faculty Building</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Class Participation</h4>
+                    <div class="mb-4">
+                        <p class="text-xs text-gray-500 mb-1">Your Attendance</p>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                            <span class="ml-2 text-sm font-medium text-gray-900">95%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-xs text-gray-500 mb-1">Class Average</p>
+                        <div class="flex items-center">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-500 h-2.5 rounded-full" style="width: 87%"></div>
+                            </div>
+                            <span class="ml-2 text-sm font-medium text-gray-900">87%</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="text-xs text-gray-500 mb-1">Current Grade</p>
+                        <p class="text-2xl font-semibold text-gray-900">A (92%)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:space-x-4">
+                <button class="mb-3 sm:mb-0 flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                    <div class="w-4 h-4 flex items-center justify-center mr-2">
+                        <i class="ri-download-cloud-line"></i>
+                    </div>
+                    Download Course Materials
+                </button>
+                <div class="flex space-x-3">
+                    <button class="flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                            <i class="ri-message-2-line"></i>
+                        </div>
+                        Contact Instructor
+                    </button>
+                    <button class="flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary !rounded-button whitespace-nowrap">
+                        <div class="w-4 h-4 flex items-center justify-center mr-2">
+                            <i class="ri-calendar-event-line"></i>
+                        </div>
+                        View Schedule
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching
+    const enrolledTabBtn = document.getElementById('enrolledTabBtn');
+    const availableTabBtn = document.getElementById('availableTabBtn');
+    const completedTabBtn = document.getElementById('completedTabBtn');
+    
+    const enrolledCoursesSection = document.getElementById('enrolledCoursesSection');
+    const availableCoursesSection = document.getElementById('availableCoursesSection');
+    const completedCoursesSection = document.getElementById('completedCoursesSection');
+    
+    enrolledTabBtn.addEventListener('click', function() {
+        // Update tab buttons
+        enrolledTabBtn.classList.add('border-primary', 'text-primary');
+        enrolledTabBtn.classList.remove('border-transparent', 'text-gray-500');
+        
+        availableTabBtn.classList.remove('border-primary', 'text-primary');
+        availableTabBtn.classList.add('border-transparent', 'text-gray-500');
+        
+        completedTabBtn.classList.remove('border-primary', 'text-primary');
+        completedTabBtn.classList.add('border-transparent', 'text-gray-500');
+        
+        // Show/hide sections
+        enrolledCoursesSection.classList.remove('hidden');
+        availableCoursesSection.classList.add('hidden');
+        completedCoursesSection.classList.add('hidden');
+    });
+    
+    availableTabBtn.addEventListener('click', function() {
+        // Update tab buttons
+        enrolledTabBtn.classList.remove('border-primary', 'text-primary');
+        enrolledTabBtn.classList.add('border-transparent', 'text-gray-500');
+        
+        availableTabBtn.classList.add('border-primary', 'text-primary');
+        availableTabBtn.classList.remove('border-transparent', 'text-gray-500');
+        
+        completedTabBtn.classList.remove('border-primary', 'text-primary');
+        completedTabBtn.classList.add('border-transparent', 'text-gray-500');
+        
+        // Show/hide sections
+        enrolledCoursesSection.classList.add('hidden');
+        availableCoursesSection.classList.remove('hidden');
+        completedCoursesSection.classList.add('hidden');
+    });
+    
+    completedTabBtn.addEventListener('click', function() {
+        // Update tab buttons
+        enrolledTabBtn.classList.remove('border-primary', 'text-primary');
+        enrolledTabBtn.classList.add('border-transparent', 'text-gray-500');
+        
+        availableTabBtn.classList.remove('border-primary', 'text-primary');
+        availableTabBtn.classList.add('border-transparent', 'text-gray-500');
+        
+        completedTabBtn.classList.add('border-primary', 'text-primary');
+        completedTabBtn.classList.remove('border-transparent', 'text-gray-500');
+        
+        // Show/hide sections
+        enrolledCoursesSection.classList.add('hidden');
+        availableCoursesSection.classList.add('hidden');
+        completedCoursesSection.classList.remove('hidden');
+    });
+    
+    // View toggle
+    const gridViewBtn = document.getElementById('gridViewBtn');
+    const listViewBtn = document.getElementById('listViewBtn');
+    
+    gridViewBtn.addEventListener('click', function() {
+        gridViewBtn.classList.add('bg-white', 'shadow-sm', 'text-primary');
+        gridViewBtn.classList.remove('text-gray-500');
+        
+        listViewBtn.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+        listViewBtn.classList.add('text-gray-500');
+        
+        // Here you would implement the actual view change logic
+    });
+    
+    listViewBtn.addEventListener('click', function() {
+        listViewBtn.classList.add('bg-white', 'shadow-sm', 'text-primary');
+        listViewBtn.classList.remove('text-gray-500');
+        
+        gridViewBtn.classList.remove('bg-white', 'shadow-sm', 'text-primary');
+        gridViewBtn.classList.add('text-gray-500');
+        
+        // Here you would implement the actual view change logic
+    });
+    
+    // Course details modal
+    const courseCards = document.querySelectorAll('.course-card-hover');
+    const courseDetailsModal = document.getElementById('courseDetailsModal');
+    const closeCourseDetailsModal = document.getElementById('closeCourseDetailsModal');
+    
+    courseCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Don't open modal if clicking on a button
+            if (e.target.closest('button')) return;
+            
+            courseDetailsModal.classList.remove('hidden');
+        });
+    });
+    
+    closeCourseDetailsModal.addEventListener('click', function() {
+        courseDetailsModal.classList.add('hidden');
+    });
+    
+    // Close modal when clicking outside
+    courseDetailsModal.addEventListener('click', function(e) {
+        if (e.target === courseDetailsModal) {
+            courseDetailsModal.classList.add('hidden');
+        }
+    });
+    
+    // Course search functionality
+    const courseSearchInput = document.getElementById('courseSearchInput');
+    
+    courseSearchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const courseCards = document.querySelectorAll('.course-card-hover');
+        
+        courseCards.forEach(card => {
+            const courseName = card.querySelector('h3').textContent.toLowerCase();
+            const courseCode = card.querySelector('.inline-flex').textContent.trim().toLowerCase();
+            const instructor = card.querySelector('.text-sm.font-medium.text-gray-900').textContent.toLowerCase();
+            
+            if (courseName.includes(searchTerm) || courseCode.includes(searchTerm) || instructor.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+    
+    // Refresh button animation
+    const refreshCoursesBtn = document.getElementById('refreshCoursesBtn');
+    
+    refreshCoursesBtn.addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        icon.classList.add('animate-spin');
+        
+        setTimeout(() => {
+            icon.classList.remove('animate-spin');
+        }, 1000);
+    });
+});
+</script>
+</body>
+</html>
