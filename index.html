@@ -58,12 +58,14 @@
             --bg-secondary: #f9fafb;
             --text-primary: #111827;
             --text-secondary: #4b5563;
+            --card-bg: #ffffff;
         }
         :root[data-theme="dark"] {
             --bg-primary: #111827;
             --bg-secondary: #1f2937;
             --text-primary: #f9fafb;
             --text-secondary: #d1d5db;
+            --card-bg: #1f2937;
         }
         /* Apply theme variables */
         body {
@@ -73,7 +75,7 @@
             font-family: 'Inter', sans-serif;
         }
         [data-theme="dark"] .bg-white {
-            background-color: var(--bg-primary);
+            background-color: var(--bg-primary) !important;
         }
         [data-theme="dark"] .bg-gray-50 {
             background-color: var(--bg-secondary);
@@ -134,6 +136,9 @@
         .terminal-cursor::after {
             content: "▍";
             @apply text-green-400 animate-pulse ml-1;
+        }
+        .theme-card {
+            background-color: var(--card-bg);
         }
     </style>
 </head>
@@ -197,32 +202,50 @@
                             </button>
                         </div>
                     </div>
-		<div class="relative">
-    			<img src="Images/Photo.jpg" alt="J Yadagiri" style="width: 60%;" class="max-w-xs sm:max-w-md mx-auto rounded-2xl shadow-2xl transform hover:scale-105 transition-			transform duration-300 object-cover" loading="eager" />
-		</div>
+        <div class="relative">
+            <img src="Images/Photo.jpg" alt="J Yadagiri" style="width: 60%;" class="max-w-xs sm:max-w-md mx-auto rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300 object-cover" loading="eager" />
+        </div>
                 </div>
             </div>
         </section>
 
         <!-- industrial-experience -->
-<section class="hero-bg text-white py-24 px-6" style="background-image: url('Images/7.jpg'); background-size: cover; background-position: center;">
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">👷 Junior Design Engineer</h1>
-    <p class="text-lg md:text-xl mb-4">Tilt-Wall Panel Design | AutoCAD & Revit | Texas Projects via 
-      <a href="https://en.wikipedia.org/wiki/Ananth_Technologies" class="underline text-blue-200 hover:text-white" target="_blank">Ananth Technologies</a>
-    </p>
-    <p class="max-w-3xl mx-auto">32 completed buildings, 2,612+ tilt-wall panels, designed across various sectors with full MEP, structural & architectural coordination.</p>
+<section class="relative">
+  <!-- Image Section (Top) -->
+  <div class="h-96 bg-gray-100 dark:bg-gray-900">
+    <img src="Images/7.jpg" 
+         alt="Engineering Background" 
+         class="w-full h-full object-cover object-center"
+         loading="lazy">
+  </div>
+  
+  <!-- Text Content Section (Bottom) -->
+  <div class="bg-white dark:bg-gray-800 py-12 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+        👷 Junior Design Engineer
+      </h1>
+      <p class="text-lg md:text-xl mb-4 text-gray-700 dark:text-gray-300">
+        Tilt-Wall Panel Design | AutoCAD & Revit | Texas Projects via 
+        <a href="https://en.wikipedia.org/wiki/Ananth_Technologies" 
+           class="text-primary-600 dark:text-primary-400 underline hover:text-primary-800 dark:hover:text-primary-300 transition-colors" 
+           target="_blank">
+          Ananth Technologies
+        </a>
+      </p>
+      <p class="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+        32 completed buildings, 2,612+ tilt-wall panels, designed across various sectors with full MEP, structural & architectural coordination.
+      </p>
+    </div>
   </div>
 </section>
 
 <section class="p-6">
   <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
     <!-- Each card starts here -->
-
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <div class="theme-card p-6 rounded-2xl shadow hover:shadow-lg transition">
       <h3 class="text-xl font-semibold mb-2">🏗️ Sectors Covered</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300">
+      <ul class="list-disc list-inside text-gray-600">
         <li>Residential</li>
         <li>Schools & Colleges</li>
         <li>Theaters</li>
@@ -231,9 +254,9 @@
       </ul>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <div class="theme-card p-6 rounded-2xl shadow hover:shadow-lg transition">
       <h3 class="text-xl font-semibold mb-2">📐 Panel Features</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300">
+      <ul class="list-disc list-inside text-gray-600">
         <li>Structural Joints</li>
         <li>Embedded Pockets</li>
         <li>Recesses & Reveals</li>
@@ -242,9 +265,9 @@
       </ul>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <div class="theme-card p-6 rounded-2xl shadow hover:shadow-lg transition">
       <h3 class="text-xl font-semibold mb-2">🏆 Achievements</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300">
+      <ul class="list-disc list-inside text-gray-600">
         <li>32 buildings completed</li>
         <li>2,612+ panels designed</li>
         <li>Optimized joints for material savings</li>
@@ -253,18 +276,18 @@
       </ul>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <div class="theme-card p-6 rounded-2xl shadow hover:shadow-lg transition">
       <h3 class="text-xl font-semibold mb-2">🧰 Tools Used</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300">
+      <ul class="list-disc list-inside text-gray-600">
         <li>AutoCAD – Drafting & Details</li>
         <li>Revit – 3D BIM Modeling</li>
         <li>Plan Analysis (PDF/Prints)</li>
       </ul>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <div class="theme-card p-6 rounded-2xl shadow hover:shadow-lg transition">
       <h3 class="text-xl font-semibold mb-2">📋 Responsibilities</h3>
-      <ul class="list-disc list-inside text-gray-600 dark:text-gray-300">
+      <ul class="list-disc list-inside text-gray-600">
         <li>Reviewed Arch/Struct/MEP plans</li>
         <li>Created detailed panel drawings</li>
         <li>Integrated aesthetics with structure</li>
@@ -272,16 +295,14 @@
       </ul>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-lg transition">
+    <div class="theme-card p-6 rounded-2xl shadow hover:shadow-lg transition">
       <h3 class="text-xl font-semibold mb-2">📍 Location & Client</h3>
-      <p class="text-gray-600 dark:text-gray-300">Worked on-site and remotely for projects in <strong>Texas, USA</strong>, under 
-        <a href="https://en.wikipedia.org/wiki/Ananth_Technologies" target="_blank" class="text-blue-600 dark:text-blue-400 underline">Ananth Technologies</a>.
+      <p class="text-gray-600">Worked on-site and remotely for projects in <strong>Texas, USA</strong>, under 
+        <a href="https://en.wikipedia.org/wiki/Ananth_Technologies" target="_blank" class="text-blue-600 underline">Ananth Technologies</a>.
       </p>
     </div>
-
   </div>
 </section>
-
 
         <!-- About Section -->
         <section id="about" class="py-20 bg-white">
@@ -336,6 +357,7 @@
                 </div>
             </div>
         </section>
+        
         <!-- Projects Section -->
         <section id="projects" class="py-20 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -346,7 +368,6 @@
                         <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="cfd">CFD</button>
                         <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="ai-ml">AI/ML</button>
                         <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="thermal">Thermal</button>
-                        <!-- Corrected Web_Design filter -->
                         <button class="px-4 py-2 rounded-full text-gray-600 hover:text-primary filter-btn" data-filter="web-design">Web_Design</button>
                     </div>
                 </div>
@@ -433,7 +454,7 @@
                         </div>
                     </div>
         
-                    <!-- Engineering Dashboard (Corrected) -->
+                    <!-- Engineering Dashboard -->
                     <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow project-card" data-tags="web-design html css javascript">
                         <img src="Images/6.png" alt="Engineering_Students_Academic_Dashboard" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-6">
@@ -452,6 +473,7 @@
                 </div>
             </div>
         </section>
+        
         <!-- Contact Section -->
         <section id="contact" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -564,13 +586,13 @@
         </div>
     </div>
 
-    <!-- Chat Widget -->
-
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Theme Toggle
+            let skillsChart = null;
             const root = document.documentElement;
+            
+            // Theme Toggle
             const themeToggle = document.getElementById('theme-toggle');
             const themeIcon = themeToggle.querySelector('i');
 
@@ -578,6 +600,7 @@
                 root.setAttribute('data-theme', isDark ? 'dark' : 'light');
                 themeIcon.className = isDark ? 'ri-moon-line ri-xl' : 'ri-sun-line ri-xl';
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                initializeSkillsChart();
             }
 
             const savedTheme = localStorage.getItem('theme');
@@ -719,32 +742,60 @@
             });
 
             // Skills Chart
-            const skillsChart = echarts.init(document.getElementById('skills-chart'));
-            const skillsOption = {
-                animation: true,
-                radar: {
-                    indicator: [
-                        { name: 'CFD', max: 100 },
-                        { name: 'Machine Learning', max: 100 },
-                        { name: 'Thermal Analysis', max: 100 },
-                        { name: 'Python', max: 100 },
-                        { name: 'Research', max: 100 },
-                        { name: 'Data Analysis', max: 100 },
-                    ],
-                    radius: window.innerWidth < 640 ? 80 : 120,
-                },
-                series: [{
-                    type: 'radar',
-                    data: [{
-                        value: [90, 85, 80, 95, 85, 90],
-                        name: 'Skills',
-                        areaStyle: { color: 'rgba(79, 70, 229, 0.1)' },
-                        lineStyle: { color: '#4F46E5' },
-                        itemStyle: { color: '#4F46E5' },
+            function initializeSkillsChart() {
+                const isDark = root.getAttribute('data-theme') === 'dark';
+                const textColor = isDark ? '#f9fafb' : '#111827';
+                const lineColor = isDark ? '#4F46E5' : '#4F46E5';
+                const areaColor = isDark ? 'rgba(79, 70, 229, 0.2)' : 'rgba(79, 70, 229, 0.1)';
+
+                const skillsOption = {
+                    animation: true,
+                    radar: {
+                        indicator: [
+                            { name: 'CFD', max: 100 },
+                            { name: 'Machine Learning', max: 100 },
+                            { name: 'Thermal Analysis', max: 100 },
+                            { name: 'Python', max: 100 },
+                            { name: 'Research', max: 100 },
+                            { name: 'Data Analysis', max: 100 },
+                        ],
+                        radius: window.innerWidth < 640 ? 80 : 120,
+                        axisLine: {
+                            lineStyle: {
+                                color: textColor
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: textColor
+                            }
+                        },
+                        name: {
+                            textStyle: {
+                                color: textColor
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'radar',
+                        data: [{
+                            value: [90, 85, 80, 95, 85, 90],
+                            name: 'Skills',
+                            areaStyle: { color: areaColor },
+                            lineStyle: { color: lineColor },
+                            itemStyle: { color: lineColor },
+                        }],
                     }],
-                }],
-            };
-            skillsChart.setOption(skillsOption);
+                };
+
+                if (skillsChart) {
+                    skillsChart.dispose();
+                }
+                skillsChart = echarts.init(document.getElementById('skills-chart'));
+                skillsChart.setOption(skillsOption);
+            }
+
+            initializeSkillsChart();
 
             window.addEventListener('resize', () => {
                 skillsChart.resize();
@@ -762,148 +813,6 @@
             }, { threshold: 0.1 });
 
             fadeInElements.forEach(element => observer.observe(element));
-
-            // Chat Widget
-            document.getElementById('chat-toggle').addEventListener('click', function () {
-                const chatWindow = document.getElementById('chat-window');
-                chatWindow.classList.toggle('hidden');
-                if (!chatWindow.classList.contains('hidden')) {
-                    document.getElementById('chat-input').focus();
-                }
-            });
-
-            document.getElementById('chat-send').addEventListener('click', sendMessage);
-            document.getElementById('chat-input').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') sendMessage();
-            });
-
-            const responseMap = {
-                profile: {
-                    keywords: ['who are you', 'about yadagiri', 'tell me about you', 'yourself'],
-                    responses: [
-                        'Hey there! I’m J Yadagiri, an M.Tech researcher at Amrita Vishwa Vidyapeetham, passionate about merging AI with fluid dynamics. Want to hear about my journey?',
-                        'I’m J Yadagiri, diving into AI and CFD to solve engineering puzzles. My base? Amrita Vishwa Vidyapeetham’s research labs. Curious about what I’m working on?',
-                        'Yo, I’m J Yadagiri! I geek out on AI and CFD at Amrita Vishwa Vidyapeetham. Ask me about my research vibe!'
-                    ]
-                },
-                education: {
-                    keywords: ['education', 'm.tech', 'b.tech', 'studies', 'amrita', 'degree'],
-                    responses: [
-                        'I’m pursuing an M.Tech in Thermal and Fluids with AI at Amrita Vishwa Vidyapeetham (2023-25). Before that, I earned a B.Tech in Civil Engineering. Want to know about my coursework?',
-                        'My academic path? M.Tech at Amrita Vishwa Vidyapeetham, blending AI with fluids, plus a B.Tech in Civil from JNTU-Hyderabad. Curious about my research focus?',
-                        'I’m studying M.Tech at Amrita, diving deep into AI and CFD. Got a B.Tech in Civil Engineering too. What part of my education interests you?'
-                    ]
-                },
-                research: {
-                    keywords: ['research', 'what are you researching', 'your work', 'interests'],
-                    responses: [
-                        'My research is all about supercharging CFD with AI at Amrita Vishwa Vidyapeetham. Think fluid simulations and predictive models! What’s your favorite tech topic?',
-                        'I’m exploring how AI can optimize fluid dynamics and thermal systems. It’s cutting-edge stuff at Amrita! Want to dive into a specific area?',
-                        'At Amrita, I’m blending machine learning with CFD to tackle real-world challenges. Excited to share more—pick a research angle!'
-                    ]
-                },
-                skills: {
-                    keywords: ['skills', 'tools', 'what can you do', 'technologies', 'python', 'openfoam'],
-                    responses: [
-                        'I’m fluent in Python, OpenFOAM, and machine learning frameworks like TensorFlow. My skills chart shows the full stack! Want details on any tool?',
-                        'My toolbox? Python, CFD simulations with OpenFOAM, and AI model-building. I love coding solutions! What skill are you curious about?',
-                        'I wield Python, OpenFOAM, and data analysis like a pro. Check my About section for a visual! Got a favorite tech?'
-                    ]
-                },
-                projects: {
-                    keywords: ['projects', 'your work', 'what have you done', 'portfolio'],
-                    responses: [
-                        'I’ve built cool stuff like Advanced Flow Prediction with CFD and Forex Prediction using deep learning. Want to explore a specific project?',
-                        'My projects range from CFD simulations to AI-driven predictions—check out Earthquake Analysis or Thermal Imaging! Which one catches your eye?',
-                        'I’m proud of my work on flow predictions, forex models, and thermal imaging. Dive into my Projects section or ask about one!'
-                    ]
-                },
-                cfd: {
-                    keywords: ['cfd', 'fluid dynamics', 'flow prediction', 'openfoam'],
-                    responses: [
-                        'CFD is my jam! I use OpenFOAM to simulate fluid flows, like in my Advanced Flow Prediction project. Want to geek out on fluid dynamics?',
-                        'Computational Fluid Dynamics is where I shine, optimizing simulations with AI. Ask about my CFD projects!',
-                        'I’m all about CFD—think fluid flows and simulations. My work with OpenFOAM is a game-changer. What’s your CFD question?'
-                    ]
-                },
-                ai: {
-                    keywords: ['ai', 'machine learning', 'deep learning', 'artificial intelligence'],
-                    responses: [
-                        'AI’s my playground! I build models for forex prediction and earthquake analysis. Want to talk neural networks or my AI projects?',
-                        'I love crafting AI solutions, from LSTMs to transformers, for real-world problems. Check my projects or ask about AI!',
-                        'Machine learning drives my research—think predictive models and data magic. Curious about my AI work?'
-                    ]
-                },
-                thermal: {
-                    keywords: ['thermal', 'heat transfer', 'thermal imaging'],
-                    responses: [
-                        'Thermal analysis is hot! My Python-based imaging project tackles industrial monitoring. Want to know more about heat transfer?',
-                        'I dive into thermal systems with projects like real-time imaging. It’s all about precision! Ask me about thermal tech.',
-                        'Thermal research? I’m on it with Python and computer vision. Check my Thermal Imaging project for details!'
-                    ]
-                },
-                contact: {
-                    keywords: ['contact', 'reach you', 'collaborate', 'get in touch'],
-                    responses: [
-                        'Ping me via Mail, WhatsApp, LinkedIn, or GitHub—links are in the Contact section. Excited to connect!',
-                        'Want to collab? My Contact section has all the ways to reach me. What’s your idea?',
-                        'Let’s team up! Check the Contact section for my Mail and social links. What’s on your mind?'
-                    ]
-                },
-                general: {
-                    keywords: ['hi', 'hello', 'hey', 'what’s up'],
-                    responses: [
-                        'Hey! I’m J Yadagiri’s AI assistant, here to chat about his AI and CFD adventures. What’s on your mind?',
-                        'Yo! Ready to explore J Yadagiri’s research world? Ask about his projects or skills!',
-                        'Hi there! I’m all about J Yadagiri’s work in AI and fluids. What do you want to dive into?'
-                    ]
-                }
-            };
-
-            function sendMessage() {
-                const input = document.getElementById('chat-input');
-                const message = input.value.trim().toLowerCase();
-                if (!message) return;
-
-                const messagesContainer = document.getElementById('chat-messages');
-                const userMessage = document.createElement('div');
-                userMessage.className = 'flex justify-end';
-                userMessage.innerHTML = `
-                    <div class="bg-primary text-white px-4 py-2 rounded-lg max-w-[80%]">${input.value}</div>
-                `;
-                messagesContainer.appendChild(userMessage);
-
-                let botResponse = 'Hmm, I’m not sure about that. Try asking about my research, projects, or skills in AI and CFD!';
-                for (const category in responseMap) {
-                    if (responseMap[category].keywords.some(keyword => message.includes(keyword))) {
-                        const responses = responseMap[category].responses;
-                        botResponse = responses[Math.floor(Math.random() * responses.length)];
-                        break;
-                    }
-                }
-
-                // Fallback for broader queries to simulate AI adaptability
-                if (botResponse.includes('Hmm')) {
-                    if (message.includes('what') || message.includes('?')) {
-                        botResponse = 'I’m tuned to J Yadagiri’s world of AI and CFD. Could you ask about his M.Tech research, projects like Advanced Flow Prediction, or skills like Python?';
-                    } else {
-                        botResponse = 'Let’s dive into something specific! Try asking about J Yadagiri’s work in fluid dynamics, AI models, or his projects.';
-                    }
-                }
-
-                const botMessage = document.createElement('div');
-                botMessage.className = 'flex justify-start';
-                botMessage.innerHTML = `
-                    <div class="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg max-w-[80%]">${botResponse}</div>
-                `;
-                setTimeout(() => {
-                    messagesContainer.appendChild(botMessage);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }, 1000);
-
-                input.value = '';
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
 
             // Typing Animation
             const typeText = async (element, text) => {
