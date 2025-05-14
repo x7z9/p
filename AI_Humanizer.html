@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarRefine | AI to Human-like Academic Text Converter & Plagiarism Checker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .dropzone {
+            border: 2px dashed #cbd5e0;
+            transition: all 0.3s ease;
+        }
+        .dropzone.active {
+            border-color: #3b82f6;
+            background-color: #f0f9ff;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .plagiarism-highlight {
+            background-color: rgba(239, 68, 68, 0.3);
+            border-bottom: 2px solid #ef4444;
+        }
+        .plagiarism-tooltip {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1f2937;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .plagiarism-highlight:hover .plagiarism-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-graduation-cap text-3xl"></i>
+                    <h1 class="text-2xl font-bold">Scholar<span class="text-blue-300">Refine</span></h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="hover:text-blue-200 transition">Home</a>
+                    <a href="#" class="hover:text-blue-200 transition">Features</a>
+                    <a href="#" class="hover:text-blue-200 transition">Pricing</a>
+                    <a href="#" class="hover:text-blue-200 transition">About</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Transform AI Text into <span class="text-gradient">Human-like Academic Writing</span></h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Refine AI-generated content into natural academic prose while ensuring originality with our advanced plagiarism detection.
+            </p>
+	<p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Unlimited FREE.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="grid md:grid-cols-2">
+                <!-- Input Section -->
+                <div class="p-6 border-r border-gray-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-800">Input Text</h3>
+                        <div class="flex space-x-2">
+                            <button id="clear-btn" class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-trash-alt"></i> Clear
+                            </button>
+                            <button id="sample-btn" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-lightbulb"></i> Sample
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex border-b border-gray-200">
+                            <button class="tab-btn active px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600" data-tab="text">
+                                <i class="fas fa-align-left mr-2"></i>Text
+                            </button>
+                            <button class="tab-btn px-4 py-2 font-medium text-gray-500 hover:text-gray-700" data-tab="file">
+                                <i class="fas fa-file-upload mr-2"></i>File Upload
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Text Input Tab -->
+                    <div id="text-tab" class="tab-content active">
+                        <textarea id="input-text" class="w-full h-64 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Paste your AI-generated text here..."></textarea>
+                    </div>
+                    
+                    <!-- File Upload Tab -->
+                    <div id="file-tab" class="tab-content hidden">
+                        <div id="dropzone" class="dropzone p-8 rounded-lg text-center cursor-pointer">
+                            <div class="flex flex-col items-center justify-center">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                <p class="text-lg font-medium text-gray-600">Drag & drop your file here</p>
+                                <p class="text-sm text-gray-500 mt-1">or click to browse</p>
+                                <input type="file" id="file-input" class="hidden" accept=".pdf,.doc,.docx,.txt">
+                                <p class="text-xs text-gray-400 mt-4">Supported formats: PDF, DOC, DOCX, TXT</p>
+                            </div>
+                        </div>
+                        <div id="file-info" class="hidden mt-4 p-3 bg-blue-50 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <i class="fas fa-file-alt text-blue-500 mr-3"></i>
+                                    <div>
+                                        <p id="file-name" class="font-medium"></p>
+                                        <p id="file-size" class="text-xs text-gray-500"></p>
+                                    </div>
+                                </div>
+                                <button id="remove-file" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <div class="flex flex-wrap gap-3">
+                            <button id="humanize-btn" class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition flex items-center justify-center">
+                                <i class="fas fa-user-edit mr-2"></i> Humanize Text
+                            </button>
+                            <button id="plagiarism-btn" class="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition flex items-center justify-center">
+                                <i class="fas fa-search mr-2"></i> Check Plagiarism
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Output Section -->
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-semibold text-gray-800">Results</h3>
+                        <div class="flex space-x-2">
+                            <button id="copy-btn" class="text-gray-500 hover:text-gray-700" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button id="download-btn" class="text-gray-500 hover:text-gray-700" title="Download as file">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex border-b border-gray-200">
+                            <button class="result-tab-btn active px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600" data-result-tab="output">
+                                <i class="fas fa-file-alt mr-2"></i>Output
+                            </button>
+                            <button class="result-tab-btn px-4 py-2 font-medium text-gray-500 hover:text-gray-700" data-result-tab="report">
+                                <i class="fas fa-chart-bar mr-2"></i>Report
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Output Tab -->
+                    <div id="output-tab" class="result-tab-content active">
+                        <div id="output-text" class="w-full h-64 p-4 border border-gray-300 rounded-lg bg-gray-50 overflow-auto">
+                            <div class="text-center text-gray-400 py-16">
+                                <i class="fas fa-arrow-left text-2xl mb-2"></i>
+                                <p>Process your text to see results here</p>
+                            </div>
+                        </div>
+                        
+                        <div id="progress-container" class="hidden mt-4">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-blue-700">Processing...</span>
+                                <span id="progress-percent" class="text-sm font-medium text-blue-700">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="progress-bar" class="progress-bar bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="stats-container" class="hidden mt-4 bg-gray-50 p-3 rounded-lg">
+                            <div class="grid grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <p class="text-sm text-gray-500">Original Words</p>
+                                    <p id="original-words" class="text-lg font-bold">0</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Humanized Words</p>
+                                    <p id="humanized-words" class="text-lg font-bold">0</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Similarity</p>
+                                    <p id="similarity-score" class="text-lg font-bold">0%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Report Tab -->
+                    <div id="report-tab" class="result-tab-content hidden">
+                        <div id="report-content" class="w-full h-64 p-4 border border-gray-300 rounded-lg bg-gray-50 overflow-auto">
+                            <div class="text-center text-gray-400 py-16">
+                                <i class="fas fa-chart-pie text-2xl mb-2"></i>
+                                <p>Generate a report to see detailed analysis</p>
+                            </div>
+                        </div>
+                        
+                        <div id="plagiarism-stats" class="hidden mt-4">
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg mb-3">Plagiarism Analysis</h4>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div class="bg-red-50 p-3 rounded-lg">
+                                        <p class="text-sm text-red-500">Plagiarized</p>
+                                        <p id="plagiarized-percent" class="text-xl font-bold">0%</p>
+                                    </div>
+                                    <div class="bg-green-50 p-3 rounded-lg">
+                                        <p class="text-sm text-green-500">Unique</p>
+                                        <p id="unique-percent" class="text-xl font-bold">0%</p>
+                                    </div>
+                                    <div class="bg-blue-50 p-3 rounded-lg">
+                                        <p class="text-sm text-blue-500">Sources Found</p>
+                                        <p id="sources-count" class="text-xl font-bold">0</p>
+                                    </div>
+                                    <div class="bg-yellow-50 p-3 rounded-lg">
+                                        <p class="text-sm text-yellow-500">Paraphrased</p>
+                                        <p id="paraphrased-percent" class="text-xl font-bold">0%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="sources-list" class="hidden mt-4">
+                                <h4 class="font-bold text-lg mb-3">Matched Sources</h4>
+                                <div class="space-y-3">
+                                    <!-- Sources will be added here dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <section class="mt-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Advanced Features for Academic Excellence</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="text-blue-600 mb-4">
+                        <i class="fas fa-brain text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI Text Humanization</h3>
+                    <p class="text-gray-600">
+                        Our advanced NLP models transform AI-generated text into natural academic writing by adjusting sentence structure, vocabulary diversity, and stylistic elements while preserving original meaning.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="text-green-600 mb-4">
+                        <i class="fas fa-search text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Comprehensive Plagiarism Check</h3>
+                    <p class="text-gray-600">
+                        Scans against billions of web pages, academic papers, and publications to detect both exact matches and paraphrased content with highlighted results and similarity scores.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="text-purple-600 mb-4">
+                        <i class="fas fa-shield-alt text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI Detection Avoidance</h3>
+                    <p class="text-gray-600">
+                        Our system eliminates common AI detection triggers like repetitive patterns, excessive formality, and lack of nuanced arguments that flag content as machine-generated.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="text-yellow-600 mb-4">
+                        <i class="fas fa-book text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Academic Tone Preservation</h3>
+                    <p class="text-gray-600">
+                        Maintains appropriate academic tone and discipline-specific terminology while making the text sound more human-written and less formulaic.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="text-red-600 mb-4">
+                        <i class="fas fa-chart-line text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Detailed Analytics</h3>
+                    <p class="text-gray-600">
+                        Provides comprehensive reports on text transformations, similarity scores, and writing improvements with actionable insights.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="text-indigo-600 mb-4">
+                        <i class="fas fa-lock text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Secure & Private</h3>
+                    <p class="text-gray-600">
+                        All documents are processed securely with end-to-end encryption. Your research remains confidential and is never stored without permission.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works -->
+        <section class="mt-16 bg-gray-50 py-12 px-6 rounded-xl">
+            <h2 class="text-3xl font-bold text-center mb-12">How ScholarRefine Works</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Progress line -->
+                    <div class="hidden md:block absolute left-8 top-0 h-full w-1 bg-blue-200 transform -translate-x-1/2"></div>
+                    
+                    <!-- Steps -->
+                    <div class="space-y-12">
+                        <!-- Step 1 -->
+                        <div class="relative flex flex-col md:flex-row items-center">
+                            <div class="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white text-xl font-bold mb-4 md:mb-0 md:mr-8 z-10">
+                                1
+                            </div>
+                            <div class="flex-1 bg-white p-6 rounded-lg shadow-sm">
+                                <h3 class="text-xl font-bold mb-3">Input Your AI-Generated Text</h3>
+                                <p class="text-gray-600">
+                                    Paste your text directly or upload documents in various formats including PDF, DOCX, and TXT. Our system extracts and prepares your content for processing.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="relative flex flex-col md:flex-row items-center">
+                            <div class="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white text-xl font-bold mb-4 md:mb-0 md:mr-8 z-10">
+                                2
+                            </div>
+                            <div class="flex-1 bg-white p-6 rounded-lg shadow-sm">
+                                <h3 class="text-xl font-bold mb-3">Advanced Text Processing</h3>
+                                <p class="text-gray-600">
+                                    Our system analyzes your text at multiple levels - from sentence structure to stylistic patterns - and applies sophisticated transformations to make it sound human-written.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="relative flex flex-col md:flex-row items-center">
+                            <div class="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white text-xl font-bold mb-4 md:mb-0 md:mr-8 z-10">
+                                3
+                            </div>
+                            <div class="flex-1 bg-white p-6 rounded-lg shadow-sm">
+                                <h3 class="text-xl font-bold mb-3">Plagiarism Verification</h3>
+                                <p class="text-gray-600">
+                                    The transformed text is checked against extensive databases to ensure originality. Potential matches are identified and highlighted for your review.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="relative flex flex-col md:flex-row items-center">
+                            <div class="flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 text-white text-xl font-bold mb-4 md:mb-0 md:mr-8 z-10">
+                                4
+                            </div>
+                            <div class="flex-1 bg-white p-6 rounded-lg shadow-sm">
+                                <h3 class="text-xl font-bold mb-3">Receive Your Enhanced Text</h3>
+                                <p class="text-gray-600">
+                                    Get your human-like academic text with a detailed report showing all transformations made and plagiarism analysis. Download or copy your refined content.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-graduation-cap text-2xl"></i>
+                        <h3 class="text-xl font-bold">Scholar<span class="text-blue-400">Refine</span></h3>
+                    </div>
+                    <p class="text-gray-400">
+                        Transforming AI-generated content into human-like academic writing while ensuring originality and academic integrity.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-researchgate"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Features</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">API</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Research</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2023 ScholarRefine. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg max-w-md w-full p-6 mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-xl font-bold"></h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modal-content" class="mb-4">
+                <!-- Modal content will be inserted here -->
+            </div>
+            <div class="flex justify-end">
+                <button id="confirm-modal" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const resultTabButtons = document.querySelectorAll('.result-tab-btn');
+        const resultTabContents = document.querySelectorAll('.result-tab-content');
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const humanizeBtn = document.getElementById('humanize-btn');
+        const plagiarismBtn = document.getElementById('plagiarism-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const sampleBtn = document.getElementById('sample-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const removeFile = document.getElementById('remove-file');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+        const statsContainer = document.getElementById('stats-container');
+        const originalWords = document.getElementById('original-words');
+        const humanizedWords = document.getElementById('humanized-words');
+        const similarityScore = document.getElementById('similarity-score');
+        const reportContent = document.getElementById('report-content');
+        const plagiarismStats = document.getElementById('plagiarism-stats');
+        const plagiarizedPercent = document.getElementById('plagiarized-percent');
+        const uniquePercent = document.getElementById('unique-percent');
+        const sourcesCount = document.getElementById('sources-count');
+        const paraphrasedPercent = document.getElementById('paraphrased-percent');
+        const sourcesList = document.getElementById('sources-list');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const closeModal = document.getElementById('close-modal');
+        const confirmModal = document.getElementById('confirm-modal');
+
+        // Sample academic text
+        const sampleText = `Artificial intelligence (AI) has emerged as a transformative technology across various domains. In the field of education, AI-powered systems are being increasingly utilized to enhance learning experiences, automate administrative tasks, and provide personalized instruction. This paper examines the current applications of AI in education, discusses the potential benefits and challenges associated with its implementation, and explores future directions for research in this area. The findings suggest that while AI offers significant opportunities to improve educational outcomes, careful consideration must be given to ethical concerns, data privacy issues, and the need for human oversight in AI-driven educational systems.`;
+
+        // Tab functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Update tab buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
+                    btn.classList.add('text-gray-500');
+                });
+                button.classList.add('active', 'text-blue-600', 'border-blue-600');
+                button.classList.remove('text-gray-500');
+                
+                // Update tab contents
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+            });
+        });
+
+        // Result tab functionality
+        resultTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const resultTabId = button.getAttribute('data-result-tab');
+                
+                // Update result tab buttons
+                resultTabButtons.forEach(btn => {
+                    btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
+                    btn.classList.add('text-gray-500');
+                });
+                button.classList.add('active', 'text-blue-600', 'border-blue-600');
+                button.classList.remove('text-gray-500');
+                
+                // Update result tab contents
+                resultTabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${resultTabId}-tab`).classList.add('active');
+                document.getElementById(`${resultTabId}-tab`).classList.remove('hidden');
+            });
+        });
+
+        // Clear button
+        clearBtn.addEventListener('click', () => {
+            inputText.value = '';
+            outputText.innerHTML = '<div class="text-center text-gray-400 py-16"><i class="fas fa-arrow-left text-2xl mb-2"></i><p>Process your text to see results here</p></div>';
+            statsContainer.classList.add('hidden');
+            reportContent.innerHTML = '<div class="text-center text-gray-400 py-16"><i class="fas fa-chart-pie text-2xl mb-2"></i><p>Generate a report to see detailed analysis</p></div>';
+            plagiarismStats.classList.add('hidden');
+        });
+
+        // Sample button
+        sampleBtn.addEventListener('click', () => {
+            inputText.value = sampleText;
+        });
+
+        // Copy button
+        copyBtn.addEventListener('click', () => {
+            if (outputText.textContent.trim() && !outputText.querySelector('.text-gray-400')) {
+                navigator.clipboard.writeText(outputText.textContent)
+                    .then(() => {
+                        showModal('Success', 'Text copied to clipboard!');
+                    })
+                    .catch(err => {
+                        showModal('Error', 'Failed to copy text: ' + err);
+                    });
+            }
+        });
+
+        // Download button
+        downloadBtn.addEventListener('click', () => {
+            if (outputText.textContent.trim() && !outputText.querySelector('.text-gray-400')) {
+                const blob = new Blob([outputText.textContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'humanized-text.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        });
+
+        // File upload handling
+        dropzone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropzone.classList.add('active');
+        }
+
+        function unhighlight() {
+            dropzone.classList.remove('active');
+        }
+
+        dropzone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length) {
+                handleFileSelect({ target: { files } });
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.type === 'application/pdf' || 
+                    file.type === 'application/msword' || 
+                    file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || 
+                    file.type === 'text/plain') {
+                    
+                    // Display file info
+                    fileName.textContent = file.name;
+                    fileSize.textContent = formatFileSize(file.size);
+                    fileInfo.classList.remove('hidden');
+                    
+                    // Read file content (simplified for demo)
+                    // In a real app, you would use proper PDF/text extraction libraries
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        inputText.value = e.target.result;
+                    };
+                    if (file.type === 'text/plain') {
+                        reader.readAsText(file);
+                    } else {
+                        // For demo purposes, we'll just show the file name
+                        inputText.value = `[Content from ${file.name} would be extracted here in a real application]`;
+                    }
+                } else {
+                    showModal('Invalid File', 'Please upload a PDF, DOC, DOCX, or TXT file.');
+                }
+            }
+        }
+
+        removeFile.addEventListener('click', () => {
+            fileInput.value = '';
+            fileInfo.classList.add('hidden');
+            inputText.value = '';
+        });
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Humanize button
+        humanizeBtn.addEventListener('click', () => {
+            if (inputText.value.trim()) {
+                processText('humanize');
+            } else {
+                showModal('Input Required', 'Please enter or upload some text to humanize.');
+            }
+        });
+
+        // Plagiarism button
+        plagiarismBtn.addEventListener('click', () => {
+            if (inputText.value.trim()) {
+                processText('plagiarism');
+            } else {
+                showModal('Input Required', 'Please enter or upload some text to check for plagiarism.');
+            }
+        });
+
+        // Text processing function (simulated)
+        function processText(action) {
+            const text = inputText.value;
+            const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+            
+            // Show progress
+            progressContainer.classList.remove('hidden');
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = `${progress}%`;
+                progressPercent.textContent = `${Math.floor(progress)}%`;
+                
+                if (progress === 100) {
+                    clearInterval(progressInterval);
+                    setTimeout(() => {
+                        progressContainer.classList.add('hidden');
+                        showResults(action, text, wordCount);
+                    }, 500);
+                }
+            }, 200);
+        }
+
+        // Show results (simulated)
+        function showResults(action, originalText, wordCount) {
+            if (action === 'humanize') {
+                // Simulate humanized text (in a real app, this would come from an API)
+                const humanizedText = humanizeText(originalText);
+                const humanizedWordCount = humanizedText.split(/\s+/).filter(word => word.length > 0).length;
+                
+                outputText.innerHTML = '';
+                outputText.textContent = humanizedText;
+                
+                // Show stats
+                statsContainer.classList.remove('hidden');
+                originalWords.textContent = wordCount;
+                humanizedWords.textContent = humanizedWordCount;
+                similarityScore.textContent = `${Math.floor(Math.random() * 15)}%`;
+                
+                // Switch to output tab
+                resultTabButtons[0].click();
+            } else if (action === 'plagiarism') {
+                // Simulate plagiarism check (in a real app, this would come from an API)
+                const plagiarismResult = checkPlagiarism(originalText);
+                
+                // Highlight plagiarized parts in output
+                outputText.innerHTML = plagiarismResult.highlightedText;
+                
+                // Show report
+                reportContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold mb-2">Plagiarism Analysis Summary</h4>
+                            <p>${plagiarismResult.summary}</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-bold mb-2">Writing Style Analysis</h4>
+                            <p>${plagiarismResult.styleAnalysis}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Show plagiarism stats
+                plagiarismStats.classList.remove('hidden');
+                plagiarizedPercent.textContent = `${plagiarismResult.plagiarizedPercent}%`;
+                uniquePercent.textContent = `${plagiarismResult.uniquePercent}%`;
+                sourcesCount.textContent = plagiarismResult.sources.length;
+                paraphrasedPercent.textContent = `${plagiarismResult.paraphrasedPercent}%`;
+                
+                // Add sources to list
+                sourcesList.innerHTML = '';
+                if (plagiarismResult.sources.length > 0) {
+                    sourcesList.classList.remove('hidden');
+                    plagiarismResult.sources.forEach(source => {
+                        const sourceElement = document.createElement('div');
+                        sourceElement.className = 'bg-white p-3 rounded-lg shadow-sm';
+                        sourceElement.innerHTML = `
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h5 class="font-medium">${source.title}</h5>
+                                    <p class="text-sm text-gray-500">${source.url}</p>
+                                    <p class="text-sm mt-1">Similarity: <span class="font-medium">${source.similarity}%</span></p>
+                                </div>
+                                <a href="${source.url}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        `;
+                        sourcesList.appendChild(sourceElement);
+                    });
+                }
+                
+                // Switch to report tab
+                resultTabButtons[1].click();
+            }
+        }
+
+        // Text humanization simulation
+        function humanizeText(text) {
+            // This is a simplified simulation - a real implementation would use NLP models
+            const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
+            let humanized = '';
+            
+            sentences.forEach(sentence => {
+                let s = sentence.trim();
+                
+                // Randomly vary sentence structure
+                if (Math.random() > 0.7) {
+                    // Add a transition word
+                    const transitions = ['Furthermore, ', 'Moreover, ', 'Additionally, ', 'However, ', 'Consequently, '];
+                    s = transitions[Math.floor(Math.random() * transitions.length)] + s.toLowerCase();
+                }
+                
+                // Randomly vary sentence length
+                if (Math.random() > 0.8 && s.length > 20) {
+                    // Split long sentence
+                    const parts = s.split(', ');
+                    if (parts.length > 1) {
+                        s = parts[0] + ', ' + parts.slice(1).join('; ') + '.';
+                    }
+                }
+                
+                // Randomly add academic phrases
+                if (Math.random() > 0.9) {
+                    const academicPhrases = [
+                        'This finding aligns with previous research demonstrating that ',
+                        'These results suggest that ',
+                        'From this perspective, it becomes evident that ',
+                        'The implications of these findings are significant because '
+                    ];
+                    s = academicPhrases[Math.floor(Math.random() * academicPhrases.length)] + s.toLowerCase();
+                }
+                
+                humanized += ' ' + s;
+            });
+            
+            return humanized.trim();
+        }
+
+        // Plagiarism check simulation
+        function checkPlagiarism(text) {
+            // This is a simplified simulation - a real implementation would use plagiarism detection APIs
+            const words = text.split(/\s+/);
+            const highlightedWords = [];
+            const plagiarizedWords = Math.floor(words.length * 0.1); // 10% plagiarized for demo
+            
+            // Mark some words as plagiarized
+            for (let i = 0; i < words.length; i++) {
+                if (i % 9 === 0 && i < plagiarizedWords) { // Every 9th word for demo
+                    highlightedWords.push(`<span class="plagiarism-highlight">${words[i]}<span class="plagiarism-tooltip">Found in 3 sources (87% match)</span></span>`);
+                } else {
+                    highlightedWords.push(words[i]);
+                }
+            }
+            
+            // Generate fake sources
+            const sources = [];
+            if (Math.random() > 0.3) {
+                sources.push({
+                    title: "Artificial Intelligence in Education: Current Trends",
+                    url: "https://example.com/ai-education-trends",
+                    similarity: Math.floor(70 + Math.random() * 25)
+                });
+            }
+            if (Math.random() > 0.5) {
+                sources.push({
+                    title: "The Impact of AI on Learning Systems",
+                    url: "https://example.com/ai-learning-impact",
+                    similarity: Math.floor(50 + Math.random() * 30)
+                });
+            }
+            
+            return {
+                highlightedText: highlightedWords.join(' '),
+                summary: "The text contains some passages that match existing sources. While the majority of the content appears original, approximately 10% shows similarity to published works. Proper citation is recommended for the highlighted sections.",
+                styleAnalysis: "The writing style shows characteristics of both human and AI-generated text. Some sentences follow predictable patterns typical of language models, while others demonstrate more natural academic phrasing.",
+                plagiarizedPercent: 10 + Math.floor(Math.random() * 5),
+                uniquePercent: 85 + Math.floor(Math.random() * 5),
+                paraphrasedPercent: 5 + Math.floor(Math.random() * 3),
+                sources: sources
+            };
+        }
+
+        // Modal functions
+        function showModal(title, content) {
+            modalTitle.textContent = title;
+            modalContent.textContent = content;
+            modal.classList.remove('hidden');
+        }
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        confirmModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
